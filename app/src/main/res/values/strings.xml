@@ -19,4 +19,32 @@
     <string name="link1"><a href="https://www.facebook.com/PokPuttapan">FB : พุทธพันธ์ ชมพันธ์</a></string>
     <string name="link2"><a href="https://www.facebook.com/profile.php?id=100014644777312">FB : วัชรพงศ์ บางหลวง</a></string>
     <string name="title_activity_teacher">TeacherActivity</string>
+
+    <array name="level">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </array>
+
+    <array name="faculty">
+        <item>วิทยาศาสตร์และเทคโนโลยี</item>
+        <item>บริหารธุรกิจ</item>
+        <item>ศิลปกรรมศาสตร์</item>
+        <item>ศิลปศาสตร์</item>
+        <item>ครุศาสตร์อุตสาหกรรม</item>
+        <item>วิศวกรรมศาสตร์</item>
+        <item>สถาปัตยกรรมศาสตร์</item>
+        <item>วิทยาลัยการแพทย์แผนไทย</item>
+        <item>เทคโนโลยีคหกรรมศาสตร์</item>
+        <item>เทคโนโลยีการเกษตร</item>
+        <item>เทคโนโลยีสื่อสารมวลชน</item>
+        <item>พยาบาลศาสตร์</item>
+    </array>
+
+    <array name="status">
+        <item>นักศึกษา</item>
+        <item>อาจารย์</item>
+    </array>
 </resources>

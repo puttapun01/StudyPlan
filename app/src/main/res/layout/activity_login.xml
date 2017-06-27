@@ -57,6 +57,7 @@
                 android:layout_margin="4dp"/>
             <EditText
                 android:id="@+id/editTextEmail"
+                android:inputType="textEmailAddress"
                 android:hint="อีเมลล์"
                 android:ems="1"
                 android:layout_width="match_parent"
