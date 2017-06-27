@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "338625211299",
+    "firebase_url": "https://studyplan-cb45d.firebaseio.com",
+    "project_id": "studyplan-cb45d",
+    "storage_bucket": "studyplan-cb45d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338625211299:android:bfb28393cf6665de",
+        "android_client_info": {
+          "package_name": "th.ac.rmutt.comsci.studyplan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338625211299-p15h0mg60q4ugbn2pug94ss3bcol7biu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFXfPewpaWJZ622XeLCG71tcGHIa1pIsA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

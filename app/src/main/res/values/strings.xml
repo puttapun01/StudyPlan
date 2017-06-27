@@ -6,4 +6,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+
+
+    <string name="app_detail">Study Plan คือ Application ที่ช่วยอำนวยความสะดวกในชีวิตวัยเรียน และเปรียบเสมือนสมุดบันทึกพกพา ที่จะสามารถตรวจสอบได้ทั้ง ตารางเรียน ตารางสอบ การบ้าน และยังสามารถสร้าง Checklist ของแต่ละวันได้อีกด้วย</string>
+    <string name="school1">สาขาวิทยาการคอมพิวเตอร์</string>
+    <string name="school2">คณะวิทยาศาสตร์และเทคโนโลยี</string>
+    <string name="school3">มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี</string>
+
+    <string name="link1"><a href="https://www.facebook.com/PokPuttapan">FB : พุทธพันธ์ ชมพันธ์</a></string>
+    <string name="link2"><a href="https://www.facebook.com/profile.php?id=100014644777312">FB : วัชรพงศ์ บางหลวง</a></string>
+    <string name="title_activity_teacher">TeacherActivity</string>
 </resources>

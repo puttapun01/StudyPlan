@@ -54,7 +54,8 @@
             android:weightSum="1">
 
             <EditText
-                android:id="@+id/regUsername"
+                android:id="@+id/editTextEmail"
+                android:inputType="textEmailAddress"
                 android:hint="อีเมลล์"
                 android:ems="1"
                 android:layout_width="match_parent"
@@ -108,7 +109,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <EditText
-                    android:id="@+id/etUsername"
+                    android:id="@+id/editTextPassword"
                     android:inputType="textPassword"
                     android:hint="รหัสผ่าน"
                     android:ems="1"
@@ -162,6 +163,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <EditText
+                    android:id="@+id/editTextConfirmPassword"
                     android:hint="ยืนยันรหัสผ่าน"
                     android:inputType="textPassword"
                     android:ems="1"
@@ -189,7 +191,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/btnGoToMain"
+            android:id="@+id/textViewRegister"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="สมัคร"
