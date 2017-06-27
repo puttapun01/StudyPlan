@@ -1,13 +1,15 @@
-package th.ac.rmutt.comsci.studyplan;
+package th.ac.rmutt.comsci.studyplan.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import th.ac.rmutt.comsci.studyplan.R;
+
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_about);
     }
 }
