@@ -2,8 +2,274 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login_v2"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.LoginActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_logo_out_v2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STUDY PLAN"
+            android:textColor="#ffffff"
+            android:textSize="23sp"
+            android:gravity="center"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_login_area"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp">
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="6dp"
+                android:padding="2dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_email"/>
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/line_horizontal"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"/>
+            <EditText
+                android:id="@+id/etUsername"
+                android:hint="อีเมลล์"
+                android:ems="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLines="1"
+                android:lines="1"
+                android:textColor="#ffffff"
+                android:background="@android:color/transparent"
+                style="@style/Base.ThemeOverlay.AppCompat.Dark"
+                android:textCursorDrawable="@null"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="202dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="6dp"
+                android:padding="3dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_lock"/>
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/line_horizontal"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:hint="รหัสผ่าน"
+                android:inputType="textPassword"
+                android:ems="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLines="1"
+                android:lines="1"
+                android:textColor="#ffffff"
+                android:background="@android:color/transparent"
+                style="@style/Base.ThemeOverlay.AppCompat.Dark"
+                android:textCursorDrawable="@null"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_btn_login"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/btnGoToMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="เข้าสู่ระบบ"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="สมัครสมาชิก"
+        android:textColor="#ffffff"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line_horizontal" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="เข้าสู่ระบบโดย"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line_horizontal" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_btn_facebook"
+            android:orientation="horizontal"
+            android:layout_marginRight="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook_box"
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facebook"
+                android:textColor="#ffffff"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_btn_google"
+            android:orientation="horizontal"
+            android:layout_marginLeft="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_google_plus_box"
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Google+"
+                android:textColor="#ffffff"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:id="@+id/textView" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/btnAbout1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_about_circle"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/btnAbout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:text="เกี่ยวกับเรา"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
