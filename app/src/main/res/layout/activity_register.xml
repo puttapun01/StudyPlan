@@ -1,9 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_login_v2"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.RegisterActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="สมัครสมาชิก"
+        android:id="@+id/textView3"
+        android:gravity="center"
+        android:textSize="21sp"
+        android:textColor="#ffffff"/>
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_login_area"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="7dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_reg_color">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:padding="1dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_email"
+                android:tint="#1080a6"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/regUsername"
+                android:hint="อีเมลล์"
+                android:ems="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLines="1"
+                android:lines="1"
+                android:textColor="#ffffff"
+                android:background="@android:color/transparent"
+                style="@style/Base.ThemeOverlay.AppCompat.Dark"
+                android:textCursorDrawable="@null"
+                android:layout_weight="1.13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_login_area"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_reg_color_top"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_lock"
+                    android:id="@+id/imageView"
+                    android:padding="3dp"
+                    android:tint="#1080a6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:inputType="textPassword"
+                    android:hint="รหัสผ่าน"
+                    android:ems="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:textColor="#ffffff"
+                    android:background="@android:color/transparent"
+                    style="@style/Base.ThemeOverlay.AppCompat.Dark"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_reg_color_bottom"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_lock"
+                    android:padding="3dp"
+                    android:tint="#1080a6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <EditText
+                    android:hint="ยืนยันรหัสผ่าน"
+                    android:inputType="textPassword"
+                    android:ems="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:textColor="#ffffff"
+                    android:background="@android:color/transparent"
+                    style="@style/Base.ThemeOverlay.AppCompat.Dark"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="68dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_btn_login"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/btnGoToMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="สมัคร"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:textColor="#d2d2d2"
+        android:textSize="16sp"
+        android:text="มหายเหตุ"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:paddingLeft="65dp"
+        android:paddingRight="65dp"
+        android:textColor="#d2d2d2"
+        android:textSize="13sp"
+        android:text="หลังจากเข้าสู่ระบบแล้วกรุณากรอกข้อมูลเพิ่มเติมในหน้าตั้งค่าโปรไฟล์"/>
+
+</LinearLayout>
