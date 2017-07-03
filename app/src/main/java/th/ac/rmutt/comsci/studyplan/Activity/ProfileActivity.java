@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import th.ac.rmutt.comsci.studyplan.MainActivity;
 import th.ac.rmutt.comsci.studyplan.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button buttonTable;
     private Button buttonPlan;
     private Button buttonSetting;
+    private Button buttonTest;
 
     private Uri mImageUri = null;
 
@@ -70,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonTable = (Button) findViewById(R.id.buttonTable);
         buttonPlan = (Button) findViewById(R.id.buttonPlan);
         buttonSetting = (Button) findViewById(R.id.buttonSetting);
+        buttonTest = (Button) findViewById(R.id.buttonTest);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonTable.setOnClickListener(this);
         buttonPlan.setOnClickListener(this);
         buttonSetting.setOnClickListener(this);
+        buttonTest.setOnClickListener(this);
     }
 
     @Override
@@ -139,6 +143,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (v == buttonSetting){
             startActivity(new Intent(this, SettingActivity.class));
+        }
+        if (v == buttonTest){
+            startActivity(new Intent(this, MainActivity.class));
         }
         
     }

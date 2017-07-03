@@ -31,7 +31,11 @@
         <activity android:name=".Activity.PlanActivity" />
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.HomeworkActivity" />
-        <activity android:name=".Activity.TableActivity"></activity>
+        <activity android:name=".Activity.TableActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
