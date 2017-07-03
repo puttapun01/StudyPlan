@@ -3,10 +3,11 @@
     package="th.ac.rmutt.comsci.studyplan">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".CustomTextView"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,12 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.ProfileActivity" />
-        <activity android:name=".Activity.EditProfileActivity"></activity>
+        <activity android:name=".Activity.EditProfileActivity" />
+        <activity android:name=".Activity.PlanActivity" />
+        <activity android:name=".Activity.SettingActivity" />
+        <activity android:name=".Activity.HomeworkActivity" />
+        <activity android:name=".Activity.TableActivity"></activity>
     </application>
 
 </manifest>

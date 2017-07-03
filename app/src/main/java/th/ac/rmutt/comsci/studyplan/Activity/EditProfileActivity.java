@@ -1,5 +1,6 @@
 package th.ac.rmutt.comsci.studyplan.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.ac.rmutt.comsci.studyplan.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -163,8 +165,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         final String user_id = firebaseAuth.getCurrentUser().getUid();
 
-        if(!TextUtils.isEmpty(name) && mImageUri != null){
-
+        if(mImageUri != null){
             StorageReference filepath = mStorageImage.child(mImageUri.getLastPathSegment());
 
             filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -173,27 +174,21 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
                     String downloadUri = taskSnapshot.getDownloadUrl().toString();
 
-                    databaseReference.child(user_id).child("stid").setValue(stid);
                     databaseReference.child(user_id).child("name").setValue(name);
+                    databaseReference.child(user_id).child("stid").setValue(stid);
                     databaseReference.child(user_id).child("level").setValue(level);
                     databaseReference.child(user_id).child("faculty").setValue(faculty);
                     databaseReference.child(user_id).child("status").setValue(status);
                     databaseReference.child(user_id).child("image").setValue(downloadUri);
+
                 }
             });
             Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, ProfileActivity.class));
         }
 
-        if(mImageUri == null){
-
-            databaseReference.child(user_id).child("stid").setValue(stid);
-            databaseReference.child(user_id).child("name").setValue(name);
-            databaseReference.child(user_id).child("level").setValue(level);
-            databaseReference.child(user_id).child("faculty").setValue(faculty);
-            databaseReference.child(user_id).child("status").setValue(status);
-
-            Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
+        if(mImageUri == null || TextUtils.isEmpty(name) || TextUtils.isEmpty(stid)){
+            Toast.makeText(this, "Nothing change data...", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, ProfileActivity.class));
         }
     }
@@ -209,5 +204,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
+    @Override
+    protected void attachBaseContext (Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="th.ac.rmutt.comsci.studyplan.Activity.SettingActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ตั้งค่า"
+                android:id="@+id/textView3"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:textColor="#339fc6"/>
+
+            <LinearLayout
+                android:id="@+id/blogItemEditProfile"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_account"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#339fc6"/>
+                <TextView
+                    android:text="ตั้งค่าโปรไฟล์"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_lock"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="เปลี่ยนรหัสผ่าน"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_translate"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="เปลี่ยนภาษา [เร็วๆนี้]"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:text="ประกาศ"
+                    android:textColor="#cecece"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_announce"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_help_circle"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="คำถามที่พบบ่อย"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_book"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="วิธีใช้งานเบื้องต้น"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_bookmark"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="ข้อตกลง และเงื่อนไขการใช้งาน"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_policy"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#FFCECECE"/>
+                <TextView
+                    android:text="นโยบายคุ้มครองข้อมูลส่วนตัว"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#cecece"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/blogItemAbout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_about_circle"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#339fc6"/>
+                <TextView
+                    android:text="เกี่ยวกับเรา"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/blogItemLogout"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_logout"
+                    android:layout_marginLeft="15dp"
+                    android:tint="#339fc6"/>
+                <TextView
+                    android:text="ออกจากระบบ"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="13dp"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

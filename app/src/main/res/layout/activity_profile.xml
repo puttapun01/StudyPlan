@@ -16,16 +16,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Email"
+            android:text="สถานะ"
+            android:layout_gravity="center_horizontal"/>
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/circularProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account"
+            app:civ_border_color="#1976d2"
+            app:civ_border_width="3dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#afafaf"
+            app:civ_shadow_radius="2" />
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXX XXXXX"
+            android:id="@+id/textViewName"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxxxxxxxx-x"
+            android:id="@+id/textViewStudentId"
+            android:layout_gravity="center_horizontal"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxxxxx@xxxxxx.xxx"
             android:id="@+id/textViewUserEmail"
             android:layout_gravity="center_horizontal"/>
+
         <TextView
-            android:layout_margin="5dp"
+            android:layout_marginTop="15dp"
             android:textAlignment="center"
             android:text="Edit Profile"
             android:id="@+id/textViewEditProfile"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#000dff"/>
 
         <TextView
             android:layout_margin="10dp"
@@ -33,7 +74,31 @@
             android:layout_height="wrap_content"
             android:text="..Logout.."
             android:id="@+id/textViewLogout"
+            android:textColor="#ff0000"
             android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/buttonHomework"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="การบ้าน"/>
+        <Button
+            android:id="@+id/buttonTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ตารางเรียน"/>
+        <Button
+            android:id="@+id/buttonPlan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="วางแผน"/>
+        <Button
+            android:id="@+id/buttonSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ตั้งค่า"/>
+
     </LinearLayout>
+
 
 </LinearLayout>

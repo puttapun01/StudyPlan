@@ -1,6 +1,7 @@
 package th.ac.rmutt.comsci.studyplan.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import th.ac.rmutt.comsci.studyplan.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -36,6 +38,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // คำสั่งซ่อน Status Bar
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        // คำสั่งแสดง Status Bar
+
+        decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -60,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textViewAbout.setOnClickListener(this);
 
         imageViewAbout.setOnClickListener(this);
+
     }
 
     private void userLogin(){
@@ -112,5 +125,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
 
+    }
+
+    @Override
+    protected void attachBaseContext (Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

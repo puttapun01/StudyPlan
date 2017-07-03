@@ -2,16 +2,178 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.AboutActivity">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="About"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="77dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_logo_out"
+                android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="STUDY PLAN"
+                android:id="@+id/textView3"
+                android:gravity="center"
+                android:textSize="21sp"
+                android:textColor="#024b8f"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/app_detail"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="ผู้จัดทำ"
+                android:gravity="center"
+                android:textSize="21sp"
+                android:textColor="#024b8f"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="115dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:layout_gravity="center"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/admin1"
+                        app:civ_border_color="#1370c7"
+                        app:civ_border_width="3dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="2"
+                        app:civ_shadow_color="#afafaf"/>
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="23dp"
+                        android:gravity="center"
+                        android:text="นายพุทธพันธ์ ชมพันธ์"
+                        android:textSize="14sp"
+                        android:textColor="#8e8e8e"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="115dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:layout_gravity="center"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/admin2"
+                        app:civ_border_color="#1370c7"
+                        app:civ_border_width="3dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="2"
+                        app:civ_shadow_color="#afafaf"/>
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="23dp"
+                        android:gravity="center"
+                        android:text="นายวัชรพงศ์ บางหลวง"
+                        android:textSize="14sp"
+                        android:textColor="#8e8e8e"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="สถานศึกษา"
+                android:id="@+id/textView7"
+                android:gravity="center"
+                android:textSize="21sp"
+                android:textColor="#024b8f"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/school1"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/school2"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/school3"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ติดต่อสอบถาม"
+                android:id="@+id/textView8"
+                android:gravity="center"
+                android:textSize="21sp"
+                android:textColor="#024b8f"/>
+            <TextView
+                android:id="@+id/link1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/link1"/>
+            <TextView
+                android:id="@+id/link2"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:text="@string/link2"/>
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
 </LinearLayout>

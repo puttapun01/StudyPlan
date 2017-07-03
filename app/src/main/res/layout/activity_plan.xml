@@ -1,0 +1,45 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PlanActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="วางแผน"
+            android:id="@+id/textView3"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="#339fc6"
+            android:layout_marginBottom="15dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/blog_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/btnAddPlan"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:src="@drawable/ic_pl_plus"
+            android:tint="#339fc6" />
+
+        <!--<include
+            android:id="@+id/btnAddPlan"
+            layout="@layout/view_add_plan_item" />-->
+
+    </LinearLayout>
+
+</LinearLayout>
+
