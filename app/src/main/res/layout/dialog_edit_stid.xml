@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#f3f1f4">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="รหัสนักศึกษา / รหัสประจำตัว"
+        android:id="@+id/textView3"
+        android:gravity="center"
+        android:textSize="21sp"
+        android:textColor="#339fc6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_login_area"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/editTextStudentId"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="0"
+            android:ems="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnSave"
+        android:layout_marginTop="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="ตกลง"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="#a6cb4a"/>
+
+</LinearLayout>
+
