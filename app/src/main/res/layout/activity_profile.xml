@@ -1,107 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f1f4"
-    android:paddingTop="20dp"
+    android:orientation="vertical"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="สถานะ"
+            android:textColor="#339fc6"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/circularProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="13dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/im_profile"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="0dp"
+                app:civ_shadow_radius="2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+>
+
+                        <TextView
+                            android:id="@+id/textViewCountSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="center"
+                            android:text="วิชา"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewCountHomework"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="การบ้าน"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewCountPlan"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="center"
+                            android:text="วางแผน"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="1dp"
+                        android:text="XXXXX XXXXX"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textViewStudentId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="xxxxxxxxxxxx-x"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewUserEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:text="xxxxxxxxx@xxxxxx.xxx" />
+
+                    <LinearLayout
+                        android:layout_marginTop="13dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/textViewEditProfile"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_btn_edit_profile"
+                            android:gravity="center"
+                            android:text="แก้ไขโปรไฟล์"
+                            android:textColor="#4CAF50"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textViewLogout"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_btn_signout"
+                            android:gravity="center"
+                            android:text="ออกจากระบบ"
+                            android:textColor="#F44336"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <co.ceryle.segmentedbutton.SegmentedButtonGroup
+        android:id="@+id/segmentButtonTabProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:sbg_animateSelector="fastOutSlowIn"
+        app:sbg_animateSelectorDuration="500"
+        app:sbg_backgroundColor="@android:color/white"
+        app:sbg_dividerColor="#339fc6"
+        app:sbg_dividerSize="1dp"
+        app:sbg_position="1"
+        app:sbg_radius="5dp"
+        app:sbg_ripple="true"
+        app:sbg_rippleColor="#339fc6"
+        app:sbg_selectorColor="#339fc6"
+        app:sbg_selectorTextColor="@android:color/white"
+        app:sbg_shadowMargin="4dp"
+        app:sbg_borderColor="#339fc6"
+        app:sbg_borderSize="1dp">
+
+        <Button
+            android:id="@+id/btnShowClassGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:text="ห้องเรียน"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textColor="#339fc6"/>
+
+        <Button
+            android:id="@+id/btnShowHomework"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:text="การบ้าน"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textColor="#339fc6"/>
+
+        <Button
+            android:id="@+id/btnShowPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:text="วางแผน"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#339fc6"/>
+
+        <Button
+            android:id="@+id/btnShowTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="10dp"
+            android:text="ตารางเรียน"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textColor="#339fc6"/>
+    </co.ceryle.segmentedbutton.SegmentedButtonGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="สถานะ"
-            android:layout_gravity="center_horizontal"/>
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/circularProfile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/im_profile"
-            app:civ_border_color="#ffffff"
-            app:civ_border_width="0dp"
-            app:civ_shadow="true"
-            app:civ_shadow_color="#afafaf"
-            app:civ_shadow_radius="2" />
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="XXXXX XXXXX"
-            android:id="@+id/textViewName"
-            android:layout_gravity="center_horizontal"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="xxxxxxxxxxxx-x"
-            android:id="@+id/textViewStudentId"
-            android:layout_gravity="center_horizontal"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="xxxxxxxxx@xxxxxx.xxx"
-            android:id="@+id/textViewUserEmail"
-            android:layout_gravity="center_horizontal"/>
-
-        <TextView
-            android:layout_marginTop="15dp"
-            android:textAlignment="center"
-            android:text="Edit Profile"
-            android:id="@+id/textViewEditProfile"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000dff"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <TextView
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="..Logout.."
-            android:id="@+id/textViewLogout"
-            android:textColor="#ff0000"
-            android:layout_gravity="center_horizontal"/>
-
-        <Button
-            android:id="@+id/buttonHomework"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="การบ้าน"/>
-        <Button
-            android:id="@+id/buttonTable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ตารางเรียน"/>
-        <Button
-            android:id="@+id/buttonPlan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="วางแผน"/>
-        <Button
-            android:id="@+id/buttonSetting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ตั้งค่า"/>
-        <Button
-            android:id="@+id/buttonTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test"/>
 
     </LinearLayout>
 

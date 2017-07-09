@@ -97,7 +97,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 textViewLevel.setText(level);
                 textViewStatus.setText(status);
 
-                Picasso.with(EditProfileActivity.this).load(image).into(circularProfile);
+                Picasso.with(EditProfileActivity.this).load(image).placeholder(R.drawable.im_profile).into(circularProfile);
 
             }
 
@@ -510,23 +510,33 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
             if (resultCode == RESULT_OK) {
 
+                progressDialog.setTitle("อัพโหลดรูปภาพ");
+                progressDialog.setMessage("กรุณารอซักครู่...");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
                 mImageUri = result.getUri();
+
                 circularProfile.setImageURI(mImageUri);
 
-                if(mImageUri != null){
+                if(mImageUri != null) {
                     StorageReference filepath = mStorageImage.child(mImageUri.getLastPathSegment());
                     filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
                             String downloadUri = taskSnapshot.getDownloadUrl().toString();
                             mDatabase.child("image").setValue(downloadUri);
                         }
                     });
 
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    progressDialog.setTitle("ไฟล์ภาพมีปัญหา");
+                    progressDialog.setMessage("กรุณาตรวจสอบไฟล์รูปภาพใหม่อีกครั้ง");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
                 }
 
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
             }
         }
     }

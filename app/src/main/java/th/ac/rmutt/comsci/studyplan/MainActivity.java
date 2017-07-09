@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import th.ac.rmutt.comsci.studyplan.Fragment.ClassTableFragment;
 import th.ac.rmutt.comsci.studyplan.Fragment.HomeworkFragment;
@@ -18,7 +19,7 @@ import th.ac.rmutt.comsci.studyplan.Fragment.ProfileFragment;
 import th.ac.rmutt.comsci.studyplan.Fragment.SettingFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        /*startControlData();*/
+
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(2);
 
     }
+
 
     @Override
     protected void attachBaseContext (Context newBase) {
@@ -66,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
     }
 
 

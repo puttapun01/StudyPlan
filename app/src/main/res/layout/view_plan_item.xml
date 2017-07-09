@@ -5,23 +5,36 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:background="#ffffff"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/ic_plan_select"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="15dp"
-        android:background="@drawable/circle_vector"
-        android:backgroundTint="#009688"
-        android:gravity="center"
-        android:padding="10dp"
-        android:src="@drawable/ic_pl_food"
-        android:textSize="40sp"
-        android:tint="#ffffff" />
+    android:orientation="horizontal"
+    android:weightSum="30">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_weight="7"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/ic_plan_color"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/bg_circle_plan"/>
+            <ImageView
+                android:id="@+id/ic_plan_select"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_book"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="20"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -35,8 +48,9 @@
                 android:id="@+id/tv_plan_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="07:30"
-                android:textSize="35sp" />
+                android:text="00:00"
+                android:textSize="35sp"
+                android:textColor="#43A047"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,47 +60,67 @@
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ประเภท : "
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tv_plan_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="ทานอาหาร"
-                android:textSize="15sp" />
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="รายละเอียด : "
-                android:textSize="15sp" />
+                android:text="รายละเอียด"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_plan_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="กินข้าวเที่ยงกับเพื่อน"
-                android:textSize="15sp" />
+                android:layout_marginTop="3dp"
+                android:text="0"
+                android:textSize="20sp"
+                android:textColor="#0277BD"/>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <FrameLayout
+            android:id="@+id/fl_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00C853">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                android:tint="#ffffff"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_delete"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F44336">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:tint="#ffffff"/>
+        </FrameLayout>
 
     </LinearLayout>
 

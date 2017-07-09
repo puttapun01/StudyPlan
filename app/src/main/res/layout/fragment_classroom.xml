@@ -16,17 +16,17 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textViewAddTableSubject"
-            android:layout_marginTop="10dp"
+            android:id="@+id/textViewAddClassRoom"
             android:layout_width="70dp"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_btn_add_table"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_add_class_room"
             android:gravity="center"
-            android:text="เพิ่มวิชา"
+            android:text="เพิ่มห้องเรียน"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </LinearLayout>
