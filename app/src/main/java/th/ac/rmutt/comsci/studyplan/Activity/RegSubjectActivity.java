@@ -1,7 +1,9 @@
-package th.ac.rmutt.comsci.studyplan;
+package th.ac.rmutt.comsci.studyplan.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import th.ac.rmutt.comsci.studyplan.R;
 
 public class RegSubjectActivity extends AppCompatActivity {
 

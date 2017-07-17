@@ -103,7 +103,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
+                /*throw databaseError.toException();*/
+                finish();
             }
         });
 
@@ -143,7 +144,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        throw databaseError.toException();
+                        /*throw databaseError.toException();*/
+                        finish();
                     }
                 });
 
@@ -187,7 +189,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        throw databaseError.toException();
+                        finish();
+                        /*throw databaseError.toException();*/
                     }
                 });
 

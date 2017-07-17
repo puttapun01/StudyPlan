@@ -1,7 +1,8 @@
-package th.ac.rmutt.comsci.studyplan;
+package th.ac.rmutt.comsci.studyplan.View;
 
 import android.app.Application;
 
+import th.ac.rmutt.comsci.studyplan.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

@@ -24,7 +24,7 @@
         <item>นักศึกษา</item>
         <item>อาจารย์</item>
     </array>
-    
+
     <string name="facebook_app_id">489880094737607</string>
 
     <string name="fb_login_protocol_scheme">fb489880094737607</string>

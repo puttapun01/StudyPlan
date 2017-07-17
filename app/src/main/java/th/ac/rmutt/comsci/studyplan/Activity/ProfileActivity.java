@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import th.ac.rmutt.comsci.studyplan.Fragment.ClassroomFragment;
-import th.ac.rmutt.comsci.studyplan.Fragment.ClassTableFragment;
-import th.ac.rmutt.comsci.studyplan.Fragment.HomeworkFragment;
-import th.ac.rmutt.comsci.studyplan.Fragment.PlanFragment;
+import th.ac.rmutt.comsci.studyplan.Fragment.ComingSoonFragment;
 import th.ac.rmutt.comsci.studyplan.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -196,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
+
             }
         });
 
@@ -210,19 +207,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 switch (position) {
                     case 0:
-                        Toast.makeText(ProfileActivity.this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
                         mViewPager.setCurrentItem(0);
                         break;
                     case 1:
-                        Toast.makeText(ProfileActivity.this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
                         mViewPager.setCurrentItem(1);
                         break;
                     case 2:
-                        Toast.makeText(ProfileActivity.this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
                         mViewPager.setCurrentItem(2);
                         break;
                     case 3:
-                        Toast.makeText(ProfileActivity.this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
                         mViewPager.setCurrentItem(3);
                         break;
                 }
@@ -245,11 +238,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 case 0 :
                     return new ClassroomFragment();
                 case 1 :
-                    return new HomeworkFragment();
+                    return new ComingSoonFragment();
                 case 2 :
-                    return new PlanFragment();
+                    return new ComingSoonFragment();
                 default :
-                    return new ClassTableFragment();
+                    return new ComingSoonFragment();
             }
         }
 

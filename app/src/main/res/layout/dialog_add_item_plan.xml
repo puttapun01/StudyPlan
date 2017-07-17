@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="th.ac.rmutt.comsci.studyplan.Activity.EditProfileActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PlanActivity"
+    >
 
     <LinearLayout
         android:layout_centerHorizontal="true"
@@ -81,7 +81,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/btnPlanSelectTime"
+            android:id="@+id/btnPlanSelectTime2"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

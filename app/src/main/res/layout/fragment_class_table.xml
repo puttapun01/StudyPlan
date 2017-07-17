@@ -7,27 +7,32 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewAddTableSubject"
-            android:layout_marginTop="10dp"
-            android:layout_width="70dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_btn_add_table"
-            android:gravity="center"
-            android:text="เพิ่มวิชา"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <ExpandableListView
+                android:id="@+id/lvExp"
+                android:layout_width="match_parent"
+                android:layout_height="310dp" />
+
+            <TextView
+                android:id="@+id/textViewAddTableSubject"
+                android:layout_marginTop="10dp"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_btn_add_table"
+                android:gravity="center"
+                android:text="เพิ่มวิชา"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

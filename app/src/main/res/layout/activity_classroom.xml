@@ -6,10 +6,68 @@
     android:layout_height="match_parent"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.ClassroomActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Classroom Activity"
-        android:gravity="center"/>
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="20">
+            <EditText
+                android:id="@+id/header_recycler_view_editText"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="12"
+                android:hint="ค้นหา"
+                android:background="@drawable/search_bar_drawable"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawableLeft="@drawable/ic_search"/>
+            <TextView
+                android:id="@+id/tvSearchClassroom"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="ค้นหา"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:background="@drawable/bg_btn_add_table"/>
+            <TextView
+                android:id="@+id/tvAddClassroom"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="เพิ่มห้องเรียน"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:background="@drawable/bg_btn_blue"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/viewClassroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

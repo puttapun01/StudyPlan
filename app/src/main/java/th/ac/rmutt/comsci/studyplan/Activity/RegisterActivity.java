@@ -110,11 +110,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             databaseReference.child(user_id).child("status").setValue(status);
                             databaseReference.child(user_id).child("image").setValue(image);
 
-                            Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Clound not register.. please try again", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "ไม่สามารถสมัครได้ กรุณาลองใหม่อีกครั้ง", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

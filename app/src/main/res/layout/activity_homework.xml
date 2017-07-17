@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context="th.ac.rmutt.comsci.studyplan.Activity.HomeworkActivity">
 
+
+
 </android.support.constraint.ConstraintLayout>

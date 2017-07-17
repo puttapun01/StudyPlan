@@ -1,43 +1,137 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PlanActivity">
+    android:orientation="vertical"
+    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PlanActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="เพิ่มการวางแผน"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#339fc6" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="วางแผน"
-            android:id="@+id/textView3"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnPlanSelectColor"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bg_circle_plan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="สี"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnPlanSelectIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_book"
+                    android:tint="#FF5722" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="ไอคอน"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnPlanSelectTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#339fc6"
             android:gravity="center"
-            android:textSize="25sp"
-            android:textColor="#339fc6"
-            android:layout_marginBottom="15dp"/>
+            android:text="00:00"
+            android:textColor="#ffffff"
+            android:textSize="60sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/blog_list"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input_all"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/btnAddPlan"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
+            <EditText
+                android:id="@+id/editTextDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="รายละเอียด"
+                android:inputType="textMultiLine"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#a6cb4a">
+        <TextView
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:src="@drawable/ic_pl_plus"
-            android:tint="#339fc6" />
-
-        <!--<include
-            android:id="@+id/btnAddPlan"
-            layout="@layout/view_add_plan_item" />-->
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="บันทึก"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:background="#a6cb4a"/>
 
     </LinearLayout>
 
