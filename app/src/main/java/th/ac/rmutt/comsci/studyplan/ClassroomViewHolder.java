@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
@@ -17,10 +21,20 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
 
     public View mView;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
+    private DatabaseReference mDatabaseUser;
+
     public ClassroomViewHolder(View itemView) {
         super(itemView);
-
         mView = itemView;
+
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+
+
+
     }
 
     public void setSubject_id(String subject_id){
@@ -43,6 +57,16 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
         tvUsername.setText(username);
     }
 
+    public void setUid(String uid){
+
+        TextView tvReg = (TextView) mView.findViewById(R.id.btnRegClassroom);
+        String u = mDatabaseUser.toString();
+
+        if(uid.equals(u)) {
+            tvReg.setVisibility(View.GONE);
+        }
+    }
+
     public void setImage(Context ctx, String image){
 
         CircularImageView classroom_image = (CircularImageView) mView.findViewById(R.id.circularClassroom);
@@ -50,6 +74,7 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void setLock(String lock){
+
         ImageView imLock = (ImageView) mView.findViewById(R.id.imLock);
 
         if(lock.equals("yes")){
@@ -57,9 +82,8 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
         }
 
         if(lock.equals("no")){
-            imLock.setImageResource(R.drawable.ic_lock);
+            imLock.setVisibility(View.GONE);
         }
 
     }
-
 }

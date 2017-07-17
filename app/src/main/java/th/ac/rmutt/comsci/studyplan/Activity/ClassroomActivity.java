@@ -54,7 +54,7 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
     // firebase Connect
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseAddClass;
-    private DatabaseReference mDatabaseReg;
+
     private DatabaseReference mDatabaseUser;
     private StorageReference mStorage;
     private FirebaseAuth mAuth;
@@ -88,12 +88,17 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void startFirebase() {
+
+        //UserID
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference().child("Classroom_images");
         mCurrentUser = mAuth.getCurrentUser();
+
+        //ClassRoom Database
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ClassRoom");
+
+        //Users Database
         mDatabaseAddClass = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid()).child("RegClass");
-        mDatabaseReg = FirebaseDatabase.getInstance().getReference().child("ClassRoom").child(mDatabase.getKey());
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
     }
 
@@ -252,17 +257,23 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
             @Override
             protected void populateViewHolder(final ClassroomViewHolder viewHolder, Classroom model, final int position) {
 
-                final String Classroom_key = getRef(position).getKey();
-                final String lock = model.getLock();
-                final String password = model.getPassword();
+                //Control To add New "User" ClassRoom register
                 final DatabaseReference newClassroom = mDatabaseAddClass.push();
 
+                //Get Key UID From "ClassRoom" To String To Set New Push On User
+                final String Classroom_key = getRef(position).getKey();
+                final String key = mDatabase.child(Classroom_key).getKey();
+
+                // Get Value From mDatabase Child ClassRoom
+                final String lock = model.getLock();
+                final String password = model.getPassword();
                 final String image = model.getImage();
                 final String sid = model.getSubject_id();
                 final String name = model.getSubject_name();
                 final String username = model.getUsername();
                 final String sec = model.getSec();
 
+                // Set View Holder
                 viewHolder.setSubject_id(model.getSubject_id());
                 viewHolder.setSubject_name(model.getSubject_name());
                 viewHolder.setSec(model.getSec());
@@ -270,71 +281,123 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setLock(model.getLock());
 
+                viewHolder.setUid(model.getUid());
 
-                viewHolder.mView.findViewById(R.id.btnRegClassroom).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        viewHolder.mView.findViewById(R.id.btnRegClassroom).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                        if(lock.equals("yes")){
-                            Toast.makeText(ClassroomActivity.this, "มีรหัสผ่าน",Toast.LENGTH_SHORT).show();
+                                if (lock.equals("yes")) {
+                                    Toast.makeText(ClassroomActivity.this, "มีรหัสผ่าน", Toast.LENGTH_SHORT).show();
 
-                            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ClassroomActivity.this);
-                            final View mView = getLayoutInflater().inflate(R.layout.dialog_confirm_password, null);
-                            mBuilder.setView(mView);
-                            final AlertDialog dialog = mBuilder.create();
-                            dialog.show();
+                                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ClassroomActivity.this);
+                                    final View mView = getLayoutInflater().inflate(R.layout.dialog_confirm_password, null);
+                                    mBuilder.setView(mView);
+                                    final AlertDialog dialog = mBuilder.create();
+                                    dialog.show();
 
-                            TextView btnCheckPassword = (TextView) mView.findViewById(R.id.btnCheckPassword);
+                                    TextView btnCheckPassword = (TextView) mView.findViewById(R.id.btnCheckPassword);
 
-                            btnCheckPassword.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    EditText passwordInput = (EditText) mView.findViewById(R.id.etConfirmClassPassword);
-                                    String p = passwordInput.getText().toString();
+                                    btnCheckPassword.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            EditText passwordInput = (EditText) mView.findViewById(R.id.etConfirmClassPassword);
+                                            String p = passwordInput.getText().toString();
 
-                                    if(!password.equals(p)){
-                                        Toast.makeText(ClassroomActivity.this, "รหัสผ่าน ผิด",Toast.LENGTH_SHORT).show();
-                                    }
-                                    if(password.equals(p)){
-                                        Toast.makeText(ClassroomActivity.this, "รหัสผ่าน ถูกต้อง" ,Toast.LENGTH_SHORT).show();
-
-                                        //*Add Source for reg Classroom to...
-                                        mDatabaseUser.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                String key = mDatabase.child(Classroom_key).getKey();
-
-                                                newClassroom.child("uid").setValue(key);
-                                                newClassroom.child("image").setValue(image);
-                                                newClassroom.child("subject_id").setValue(sid);
-                                                newClassroom.child("subject_name").setValue(name);
-                                                newClassroom.child("username").setValue(username);
-                                                newClassroom.child("sec").setValue(sec);
-                                        }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
+                                            if (!password.equals(p)) {
+                                                Toast.makeText(ClassroomActivity.this, "รหัสผ่าน ผิด", Toast.LENGTH_SHORT).show();
                                             }
-                                        });
+                                            if (password.equals(p)) {
+                                                Toast.makeText(ClassroomActivity.this, "รหัสผ่าน ถูกต้อง", Toast.LENGTH_SHORT).show();
 
+                                                //*Add Source for reg Classroom to...
+                                                mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        newClassroom.child("uid").setValue(key);
+                                                        newClassroom.child("image").setValue(image);
+                                                        newClassroom.child("subject_id").setValue(sid);
+                                                        newClassroom.child("subject_name").setValue(name);
+                                                        newClassroom.child("username").setValue(username);
+                                                        newClassroom.child("sec").setValue(sec);
+                                                    }
 
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
 
-                                        dialog.dismiss();
-                                        finish();
-                                        startActivity(new Intent(ClassroomActivity.this, ProfileActivity.class));
-                                    }
+                                                    }
+                                                });
+
+                                                dialog.dismiss();
+                                                finish();
+                                                startActivity(new Intent(ClassroomActivity.this, ProfileActivity.class));
+                                            }
+                                        }
+                                    });
                                 }
-                            });
-                        }
 
-                        if(lock.equals("no")){
-                            Toast.makeText(ClassroomActivity.this, "ไม่มีรหัสผ่าน",Toast.LENGTH_SHORT).show();
-                        }
+                                if (lock.equals("no")) {
+                                    Toast.makeText(ClassroomActivity.this, "ไม่มีรหัสผ่าน", Toast.LENGTH_SHORT).show();
 
-                    }
+                                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ClassroomActivity.this);
+                                    final View mView = getLayoutInflater().inflate(R.layout.dialog_confirm_regclass, null);
 
-                });
+                                    final TextView mSubjectID = (TextView) mView.findViewById(R.id.tv_subject_id);
+                                    final TextView mSubjectName = (TextView) mView.findViewById(R.id.tv_subject_name);
+                                    final TextView mSec = (TextView) mView.findViewById(R.id.tv_subject_sec);
+
+                                    mSubjectID.setText(sid);
+                                    mSubjectName.setText(name);
+                                    mSec.setText("Sec." + sec);
+
+                                    mBuilder.setView(mView);
+                                    final AlertDialog dialog = mBuilder.create();
+                                    dialog.show();
+
+                                    TextView btnConfirmReg = (TextView) mView.findViewById(R.id.btnConfirmReg);
+                                    TextView btnConfirmCancle = (TextView) mView.findViewById(R.id.btnConfirmCancle);
+
+                                    btnConfirmReg.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //*Add Source for reg Classroom to...
+                                            mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    String key = mDatabase.child(Classroom_key).getKey();
+
+                                                    newClassroom.child("uid").setValue(key);
+                                                    newClassroom.child("image").setValue(image);
+                                                    newClassroom.child("subject_id").setValue(sid);
+                                                    newClassroom.child("subject_name").setValue(name);
+                                                    newClassroom.child("username").setValue(username);
+                                                    newClassroom.child("sec").setValue(sec);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            dialog.dismiss();
+                                            finish();
+                                            startActivity(new Intent(ClassroomActivity.this, ProfileActivity.class));
+
+                                        }
+                                    });
+
+                                    btnConfirmCancle.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                }
+
+                            }
+
+                        });
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override

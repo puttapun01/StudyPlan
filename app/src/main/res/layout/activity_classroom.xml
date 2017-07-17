@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="20">
+
             <EditText
                 android:id="@+id/header_recycler_view_editText"
                 android:layout_width="0dp"
@@ -66,7 +67,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/viewClassroom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
     </LinearLayout>

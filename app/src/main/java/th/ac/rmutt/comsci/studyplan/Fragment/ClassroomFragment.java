@@ -81,7 +81,6 @@ public class ClassroomFragment extends Fragment {
                     viewHolder.setSec(model.getSec());
                     viewHolder.setUsername(model.getUsername());
                     viewHolder.setImage(getApplicationContext(), model.getImage());
-
                 }
         };
 

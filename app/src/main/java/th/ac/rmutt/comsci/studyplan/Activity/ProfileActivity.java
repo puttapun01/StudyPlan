@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-    private ProgressDialog progressDialog;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +65,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         initView();
         initListener();
+        setupDialog();
         startConnectFirebase();
         startDataChange();
         setButtonSegment();
         setViewSegment();
-        setupDialogLogout();
-
     }
 
-    private void setupDialogLogout() {
-        progressDialog = new ProgressDialog(this);
+    private void setupDialog() {
+        mProgressDialog = new ProgressDialog(this);
     }
 
     private void startConnectFirebase() {
@@ -174,6 +173,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void startDataChange() {
 
+        mProgressDialog.setMessage("กำลังโหลดข้อมูล...");
+        mProgressDialog.show();
+
         //Profile Changer
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -189,6 +191,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                 Picasso.with(ProfileActivity.this).load(image).into(circularProfile);
 
+                mProgressDialog.dismiss();
             }
 
             @Override

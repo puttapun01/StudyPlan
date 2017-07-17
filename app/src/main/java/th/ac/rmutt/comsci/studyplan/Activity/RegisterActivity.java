@@ -39,6 +39,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        startViewFullScreen();
+        startFirebase();
+        initView();
+        initListener();
+
+        progressDialog = new ProgressDialog(this);
+    }
+
+    private void initListener() {
+        textViewRegister.setOnClickListener(this);
+    }
+
+    private void startViewFullScreen() {
         // คำสั่งซ่อน Status Bar
 
         View decorView = getWindow().getDecorView();
@@ -48,7 +61,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
 
+    private void startFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
@@ -58,30 +73,39 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        progressDialog = new ProgressDialog(this);
+    }
 
+    private void initView() {
         textViewRegister = (TextView) findViewById(R.id.textViewRegister);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-
-        textViewRegister.setOnClickListener(this);
+        editTextConfirmPassword = (EditText) findViewById(R.id.editTextConfirmPassword);
     }
 
     private void registerUser(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String conPass = editTextConfirmPassword.getText().toString();
+
 
         if(TextUtils.isEmpty(email)){
-            //email is empty
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
+            Toast.makeText(this, "กรุณาใส่ Email", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if(TextUtils.isEmpty(password)){
-            //password is empty
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
+            Toast.makeText(this, "กรุณาใส่รหัสผ่าน", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(conPass)){
+            Toast.makeText(this, "กรุณาใส่รหัสผ่าน", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!password.equals(conPass)){
+            Toast.makeText(this, "รหัสผ่านไม่ตรงกัน", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -103,23 +127,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             final String user_id = firebaseAuth.getCurrentUser().getUid();
 
-                            databaseReference.child(user_id).child("name").setValue(name);
-                            databaseReference.child(user_id).child("stid").setValue(stid);
-                            databaseReference.child(user_id).child("level").setValue(level);
-                            databaseReference.child(user_id).child("faculty").setValue(faculty);
-                            databaseReference.child(user_id).child("status").setValue(status);
-                            databaseReference.child(user_id).child("image").setValue(image);
+                            if(user_id == null){
 
-                            Toast.makeText(RegisterActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                databaseReference.child(user_id).child("name").setValue(name);
+                                databaseReference.child(user_id).child("stid").setValue(stid);
+                                databaseReference.child(user_id).child("level").setValue(level);
+                                databaseReference.child(user_id).child("faculty").setValue(faculty);
+                                databaseReference.child(user_id).child("status").setValue(status);
+                                databaseReference.child(user_id).child("image").setValue(image);
+
+                                Toast.makeText(RegisterActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
                         } else {
                             Toast.makeText(RegisterActivity.this, "ไม่สามารถสมัครได้ กรุณาลองใหม่อีกครั้ง", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
 
     @Override
     public void onClick(View v) {
