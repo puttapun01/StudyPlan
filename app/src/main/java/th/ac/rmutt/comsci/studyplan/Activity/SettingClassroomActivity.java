@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -66,6 +67,8 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
     private TextView tv_subject_username;
     private TextView tv_subject_sec;
+
+    private ImageView btnBack;
 
     private Switch switchPassword;
 
@@ -214,7 +217,6 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
     private void initView() {
 
-
         tv_subject_sec = (TextView) findViewById(R.id.tv_subject_sec);
 
         tv_subject_username = (TextView) findViewById(R.id.tv_subject_username);
@@ -233,6 +235,8 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
         btnChangeUsername = (LinearLayout) findViewById(R.id.btnChangeUsername);
         tvPassword = (TextView) findViewById(R.id.tvPassword);
 
+        btnBack = (ImageView) findViewById(R.id.btnBack);
+
     }
 
     private void initListener() {
@@ -243,6 +247,8 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
         btnChangeSec.setOnClickListener(this);
         btnChangeUsername.setOnClickListener(this);
         tvPassword.setOnClickListener(this);
+
+        btnBack.setOnClickListener(this);
 
     }
 
@@ -765,6 +771,10 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
         if(v == tvPassword){
             startChangePassword();
+        }
+
+        if(v == btnBack){
+            finish();
         }
 
     }
