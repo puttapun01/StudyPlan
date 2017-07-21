@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewClassReg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="1dp"
     android:background="#ffffff"
     android:orientation="horizontal"
-    android:weightSum="35">
+    android:weightSum="50">
 
     <LinearLayout
-        android:layout_weight="7.5"
+        android:layout_weight="11"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="right">
+        android:gravity="left">
+
         <FrameLayout
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
@@ -20,7 +22,6 @@
             android:layout_gravity="center_vertical">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-
                 android:id="@+id/circularClassroom"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
@@ -30,56 +31,60 @@
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="0dp"
                 app:civ_shadow_radius="2" />
+
         </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="27.5"
+        android:layout_weight="39"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:gravity="left"
             android:orientation="horizontal">
 
             <TextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/tv_subject_id"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="รหัสวิชา"
                 android:textColor="#43A047"
-                android:textSize="23sp" />
+                android:textSize="21sp" />
 
             <TextView
-                android:id="@+id/tv_subject_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/tv_subject_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="ชื่อวิชา"
-                android:textSize="23sp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:textSize="21sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/zz"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="สอนโดย :"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvUsername"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="ชื่อผู้สอน"
@@ -87,25 +92,25 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:layout_marginTop="3dp"
             android:layout_gravity="left"
+            android:layout_marginTop="3dp"
             android:background="#dadada"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/key"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sec."
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_subject_sec"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="16sp" />

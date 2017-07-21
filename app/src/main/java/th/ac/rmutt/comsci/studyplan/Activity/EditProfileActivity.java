@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +41,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseStatus;
     private FirebaseUser mCurrentUser;
     private StorageReference mStorageImage;
 
     private TextView textViewUserEmail;
+
+    private ImageView btnBack;
 
     private FrameLayout frameChangProfile;
     private LinearLayout btnEditStid, btnEditName, btnEditLevel, btnEditFaculty, btnEditStatus;
@@ -56,8 +60,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private Uri mImageUri = null;
 
     private ProgressDialog progressDialog;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         final String current_uid = mCurrentUser.getUid();
         mStorageImage = FirebaseStorage.getInstance().getReference().child("Profile_images");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        mDatabaseStatus = FirebaseDatabase.getInstance().getReference().child("Status");
 
         initView();
+        initListener();
 
         progressDialog = new ProgressDialog(this);
 
@@ -113,10 +117,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
         textViewUserEmail.setText(user.getEmail());
 
-        frameChangProfile.setOnClickListener(this);
+
 
         dialogControl();
     }
+
+
 
     private void dialogControl() {
         startBtnEditStid();
@@ -439,6 +445,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 View mView = getLayoutInflater().inflate(R.layout.dialog_edit_status, null);
                 final TextView mStatus1 = (TextView) mView.findViewById(R.id.textViewStatus1);
                 final TextView mStatus2 = (TextView) mView.findViewById(R.id.textViewStatus2);
+                final String getId = mDatabase.getKey().toString();
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -450,6 +457,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(EditProfileActivity.this, "เปลี่ยนแปลงข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
                         final String status = mStatus1.getText().toString().trim();
                         mDatabase.child("status").setValue(status);
+                        mDatabase.child("status_id").setValue("teacher");
+                        mDatabaseStatus.child("teacher").child(getId).child("status").setValue("teacher");
+                        mDatabaseStatus.child("student").child(getId).child("status").removeValue();
+
                         dialog.dismiss();
                     }
                 });
@@ -460,6 +471,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(EditProfileActivity.this, "เปลี่ยนแปลงข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
                         final String status = mStatus2.getText().toString().trim();
                         mDatabase.child("status").setValue(status);
+                        mDatabase.child("status_id").setValue("student");
+                        mDatabaseStatus.child("student").child(getId).child("status").setValue("student");
+                        mDatabaseStatus.child("teacher").child(getId).child("status").removeValue();
                         dialog.dismiss();
                     }
                 });
@@ -485,6 +499,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         circularProfile = (CircularImageView) findViewById(R.id.circularProfile);
         //FrameLayout
         frameChangProfile = (FrameLayout) findViewById(R.id.frameChangProfile);
+
+        btnBack = (ImageView) findViewById(R.id.btnBack);
     }
 
     private void changProfilePicture() {
@@ -544,11 +560,20 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void initListener() {
+
+        frameChangProfile.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+
+    }
 
     @Override
     public void onClick(View v) {
         if(v == frameChangProfile){
             changProfilePicture();
+        }
+        if(v == btnBack){
+            finish();
         }
 
     }

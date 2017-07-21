@@ -3,7 +3,7 @@ package th.ac.rmutt.comsci.studyplan;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,24 +17,30 @@ import com.squareup.picasso.Picasso;
  * Created by Puttapan on 17/7/2560.
  */
 
-public class ClassroomViewHolder extends RecyclerView.ViewHolder{
+public class RegClassroomViewHolder extends RecyclerView.ViewHolder{
 
     public View mView;
+    TextView tvReg;
+    TextView tvRegx;
+    LinearLayout viewClassReg;
 
+    private DatabaseReference mDatabaseRegClass;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
-    private DatabaseReference mDatabaseUser;
+    private RecyclerView recyclerViewClassReg;
 
-    public ClassroomViewHolder(View itemView) {
+    public RegClassroomViewHolder(View itemView) {
         super(itemView);
+
         mView = itemView;
 
+        tvReg = (TextView) mView.findViewById(R.id.btnRegClassroom);
+        viewClassReg = (LinearLayout) mView.findViewById(R.id.viewClassReg);
+        recyclerViewClassReg = (RecyclerView) mView.findViewById(R.id.recyclerViewClassReg);
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
-
-
-
+        mDatabaseRegClass = FirebaseDatabase.getInstance().getReference().child("UserGetClass").child(mCurrentUser.getUid());
+        mDatabaseRegClass.keepSynced(true);
     }
 
     public void setSubject_id(String subject_id){
@@ -57,16 +63,6 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
         tvUsername.setText(username);
     }
 
-    public void setUid(String uid){
-
-        TextView tvReg = (TextView) mView.findViewById(R.id.btnRegClassroom);
-        String u = mDatabaseUser.toString();
-
-        if(uid.equals(u)) {
-            tvReg.setVisibility(View.GONE);
-        }
-    }
-
     public void setImage(Context ctx, String image){
 
         CircularImageView classroom_image = (CircularImageView) mView.findViewById(R.id.circularClassroom);
@@ -75,10 +71,10 @@ public class ClassroomViewHolder extends RecyclerView.ViewHolder{
 
     public void setLock(String lock){
 
-        ImageView imLock = (ImageView) mView.findViewById(R.id.imLock);
+        CircularImageView imLock = (CircularImageView) mView.findViewById(R.id.imLock);
 
         if(lock.equals("yes")){
-            imLock.setImageResource(R.drawable.ic_lock_2);
+            imLock.setBackgroundResource(R.color.transparent);
         }
 
         if(lock.equals("no")){

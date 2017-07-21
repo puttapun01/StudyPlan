@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_history_menu_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/btnSettingClass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="ตั้งค่าห้องเรียน"
+        android:textSize="18sp"
+        android:drawableLeft="@drawable/ic_settings"
+        android:drawableTint="#757575"
+        android:textColor="#757575"/>
+
+    <TextView
+        android:id="@+id/btnMember"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="สมาชิก"
+        android:textSize="18sp"
+        android:drawableLeft="@drawable/ic_account"
+        android:drawableTint="#757575"
+        android:textColor="#757575"/>
+
+    <TextView
+        android:id="@+id/btnOutClass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/activity_horizontal_margin"
+        android:drawableLeft="@drawable/ic_logout"
+        android:drawableTint="#F44336"
+        android:textColor="#F44336"
+        android:gravity="center_vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="ออกจากห้องเรียน"
+        android:textSize="18sp"/>
+
+</LinearLayout>

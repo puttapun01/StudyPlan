@@ -124,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             final String level = "(กรุณาเพิ่มข้อมูล)";
                             final String faculty = "(กรุณาเพิ่มข้อมูล)";
                             final String status = "(กรุณาเพิ่มข้อมูล)";
+                            final String status_id = "student";
 
                             final String user_id = firebaseAuth.getCurrentUser().getUid();
 
@@ -135,6 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 databaseReference.child(user_id).child("faculty").setValue(faculty);
                                 databaseReference.child(user_id).child("status").setValue(status);
                                 databaseReference.child(user_id).child("image").setValue(image);
+                                databaseReference.child(user_id).child("status_id").setValue(status_id);
 
                                 Toast.makeText(RegisterActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
                                 finish();

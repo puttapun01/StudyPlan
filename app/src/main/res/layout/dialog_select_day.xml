@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay1"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay2"
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay3"
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay4"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay5"
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay6"
@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_orange"
+                android:background="@drawable/bg_btn_color_orange"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewDay7"

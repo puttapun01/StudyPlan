@@ -5,13 +5,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -42,10 +48,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private TextView btnConfirmCancle, btnConfirmLogout;
 
+    private ImageView imageViewSelect;
+    private TextView btnSettingProfile;
+    private TextView btnMember;
+    private TextView btnLogout;
+
+    private SegmentedButtonGroup sbg;
 
     private TextView textViewUserEmail;
     private TextView textViewName;
     private TextView textViewStudentId;
+    private String mClass_key = null;
 
     private CircularImageView circularProfile;
 
@@ -105,13 +118,48 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        if (v == textViewEditProfile){
-            startActivity(new Intent(this, EditProfileActivity.class));
-        }
-        if (v == textViewLogout){
-            startLogoutConfirm();
+        if (v == imageViewSelect){
+            startButtomSheetSelect();
         }
 
+    }
+
+    private void startButtomSheetSelect() {
+        final BottomSheetDialog buttomSheetDialog = new BottomSheetDialog(ProfileActivity.this);
+        View parentView = getLayoutInflater().inflate(R.layout.view_profile_select, null);
+        buttomSheetDialog.setContentView(parentView);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from((View) parentView.getParent());
+        bottomSheetBehavior.setPeekHeight(
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+        buttomSheetDialog.show();
+
+        btnSettingProfile = (TextView) parentView.findViewById(R.id.btnSettingClass);
+        btnLogout = (TextView) parentView.findViewById(R.id.btnOutClass);
+        btnMember = (TextView) parentView.findViewById(R.id.btnMember);
+
+        btnSettingProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttomSheetDialog.dismiss();
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+            }
+        });
+
+        btnMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttomSheetDialog.dismiss();
+                startActivity(new Intent(ProfileActivity.this, AllUserActivity.class));
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttomSheetDialog.dismiss();
+                startLogoutConfirm();
+            }
+        });
     }
 
     private void startLogoutConfirm() {
@@ -149,23 +197,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         circularProfile = (CircularImageView) findViewById(R.id.circularProfile);
         //Button
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
-        textViewEditProfile = (TextView) findViewById(R.id.textViewEditProfile);
-        textViewLogout = (TextView) findViewById(R.id.textViewLogout);
 
         btnConfirmCancle = (TextView) findViewById(R.id.btnConfirmCancle);
         btnConfirmLogout = (TextView) findViewById(R.id.btnConfirmLogout);
+
+        imageViewSelect = (ImageView) findViewById(R.id.imageViewSelect);
 }
 
     private void initListener() {
-        textViewEditProfile.setOnClickListener(this);
-        textViewLogout.setOnClickListener(this);
+        imageViewSelect.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setViewSegment() {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         SegmentedButtonGroup segmentButtonTabProfile = (SegmentedButtonGroup) findViewById(R.id.segmentButtonTabProfile);
@@ -203,7 +252,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setButtonSegment() {
-        final SegmentedButtonGroup sbg = (SegmentedButtonGroup) findViewById(R.id.segmentButtonTabProfile);
+        sbg = (SegmentedButtonGroup) findViewById(R.id.segmentButtonTabProfile);
         sbg.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {

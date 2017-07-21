@@ -1,4 +1,4 @@
-package th.ac.rmutt.comsci.studyplan;
+package th.ac.rmutt.comsci.studyplan.Adapter;
 
 /**
  * Created by Puttapan on 14/7/2560.

@@ -189,21 +189,41 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
+            android:id="@+id/btnFacebookLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:visibility="gone"/>
+
+        <!--<LinearLayout
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_btn_facebook"
+            android:orientation="horizontal"
+            android:layout_marginRight="4dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook_box"
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facebook"
+                android:textColor="#ffffff"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/btnGoogleLogin"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
             android:layout_width="75dp"
             android:layout_height="30dp"
             android:background="@drawable/bg_btn_google"
@@ -226,6 +246,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="3dp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

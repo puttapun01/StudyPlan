@@ -6,13 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,17 +40,21 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import th.ac.rmutt.comsci.studyplan.Classroom;
-import th.ac.rmutt.comsci.studyplan.ClassroomViewHolder;
+import th.ac.rmutt.comsci.studyplan.Adapter.Classroom;
+import th.ac.rmutt.comsci.studyplan.Adapter.ClassroomViewHolder;
 import th.ac.rmutt.comsci.studyplan.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ClassroomActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView tvAddClassroom;
-    private TextView tvSearchClassroom;
+    private SwipeRefreshLayout mSwipe;
+
+    private ImageView tvAddClassroom;
+    private ImageView btnBack;
 
     private ProgressDialog mProgress;
+
+    private String linkClass = "https://firebasestorage.googleapis.com/v0/b/studyplan-cb45d.appspot.com/o/Classroom_images%2Fim_profile_group.jpg?alt=media&token=19bc052a-0e8b-4e43-9e7e-ac66e0d71083" ;
 
     private RecyclerView viewClassroom;
 
@@ -54,6 +63,8 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
     // firebase Connect
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseAddClass;
+    private DatabaseReference mDatabaseRagClass;
+    private DatabaseReference mDatabaseUserGetClass;
 
     private DatabaseReference mDatabaseUser;
     private StorageReference mStorage;
@@ -72,6 +83,7 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
         initView();
         initListener();
         startFirebase();
+        startRefresh();
 
         mProgress = new ProgressDialog(this);
 
@@ -82,8 +94,6 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         viewClassroom.setLayoutManager(layoutManager);
-
-        mImage = (CircularImageView) findViewById(R.id.circularProfile);
 
     }
 
@@ -96,10 +106,12 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
 
         //ClassRoom Database
         mDatabase = FirebaseDatabase.getInstance().getReference().child("ClassRoom");
+        mDatabaseRagClass = FirebaseDatabase.getInstance().getReference().child("RegClass");
+        mDatabaseUserGetClass = FirebaseDatabase.getInstance().getReference().child("UserGetClass");
 
         //Users Database
-        mDatabaseAddClass = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid()).child("RegClass");
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+
     }
 
     private void startDialogAddClassroom() {
@@ -107,20 +119,18 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(ClassroomActivity.this);
         final View mView = getLayoutInflater().inflate(R.layout.dialog_add_classroom, null);
 
-        mImage = (CircularImageView) mView.findViewById(R.id.circularProfile);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
 
         final EditText mSubjectID = (EditText) mView.findViewById(R.id.editTextSubjectID);
         final EditText mSubjectName = (EditText) mView.findViewById(R.id.editTexctSubjectName);
         final EditText mSec = (EditText) mView.findViewById(R.id.editTextSec);
-        final EditText mClassPassword = (EditText) mView.findViewById(R.id.editTextClassPassword);
-        final RadioButton mPassYes = (RadioButton) mView.findViewById(R.id.radioButtonHavePassword);
-        final RadioButton mPassNo = (RadioButton) mView.findViewById(R.id.radioButtonNotPassword);
-
-        TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
-
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.show();
+        final TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+        final EditText tvPassword = (EditText) mView.findViewById(R.id.tvPassword);
+        final Switch switchPassword = (Switch) mView.findViewById(R.id.switchPassword);
+        final LinearLayout layoutPassword = (LinearLayout) mView.findViewById(R.id.layoutPassword);
+        mImage = (CircularImageView) mView.findViewById(R.id.circularProfile);
 
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,119 +138,224 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                 Toast.makeText(ClassroomActivity.this, "เพิ่มรูป",Toast.LENGTH_SHORT).show();
                 changProfilePicture();
             }
-
-            private void changProfilePicture() {
-                Intent gallerryIntent = new Intent();
-                gallerryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                gallerryIntent.setType("image/*");
-                startActivityForResult(gallerryIntent, GALLERY_REQUEST);
-            }
-
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        layoutPassword.setVisibility(View.GONE);
 
+        switchPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchPassword.isChecked()){
+                    layoutPassword.setVisibility(View.VISIBLE);
+                } else {
+                    layoutPassword.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        final DatabaseReference addClassroom = mDatabase.push();
+        final String uid = mDatabaseUser.getKey().toString();
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mProgress.setMessage("กำลังเพิ่มห้องเรียนใหม่...");
 
-                mProgress.setMessage("กำลังเพิ่มกลุ่มเรียนใหม่...");
 
-                if(mSubjectID.getText().toString().isEmpty() && mSubjectName.getText().toString().isEmpty() && mSec.getText().toString().isEmpty())
-                {
-                    Toast.makeText(ClassroomActivity.this, "กรุณาใส่ข้อมูลให้ครบ",Toast.LENGTH_SHORT).show();
-                }
+                        final String id = mSubjectID.getText().toString().trim();
+                        final String name = mSubjectName.getText().toString().trim();
+                        final String sec = mSec.getText().toString().trim();
+                        final String password = tvPassword.getText().toString().trim();
 
-                if(!mSubjectID.getText().toString().isEmpty() &&
-                        !mSubjectName.getText().toString().isEmpty() &&
-                        !mSec.getText().toString().isEmpty())
-                {
-                    if(mPassYes.isChecked()){
-                        if(mClassPassword.getText().toString().isEmpty()){
-                            Toast.makeText(ClassroomActivity.this, "กรุณาใส่ข้อมูลให้ครบ",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
+                        /*---------- Part of "Full" Input ------------------------------------------------------------------------*/
 
-                    mProgress.show();
-
-                    final DatabaseReference newPost = mDatabase.push();
-                    final String SubjectID = mSubjectID.getText().toString().trim();
-                    final String SubjectName = mSubjectName.getText().toString().trim();
-                    final String Sec = mSec.getText().toString().trim();
-
-                    mDatabaseUser.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            newPost.child("subject_id").setValue(SubjectID);
-                            newPost.child("subject_name").setValue(SubjectName);
-                            newPost.child("sec").setValue(Sec);
-                            newPost.child("uid").setValue(mCurrentUser.getUid());
-
+                        if(switchPassword.isChecked() && !id.isEmpty() && !name.isEmpty() && !sec.isEmpty() && !password.isEmpty()){
+                            mProgress.show();
                             if(mImageUri != null) {
                                 StorageReference filepath = mStorage.child(mImageUri.getLastPathSegment());
                                 filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                                         String downloadUri = taskSnapshot.getDownloadUrl().toString();
-                                        newPost.child("image").setValue(downloadUri);
-
+                                        addClassroom.child("image").setValue(downloadUri);
                                     }
                                 });
                             }
 
-                            if(mImageUri == null) {
-                                newPost.child("image").setValue("https://firebasestorage.googleapis.com/v0/b/studyplan-cb45d.appspot.com/o/Classroom_images%2Fim_profile_group.jpg?alt=media&token=19bc052a-0e8b-4e43-9e7e-ac66e0d71083");
+                            if(mImageUri == null){
+                                addClassroom.child("image").setValue(linkClass);
                             }
 
-                            if(mPassYes.isChecked()){
-                                final String ClassPassword = mClassPassword.getText().toString().trim();
-                                newPost.child("password").setValue(ClassPassword);
-                                newPost.child("lock").setValue("yes");
-
-                            }
-
-                            if(mPassNo.isChecked()){
-                                newPost.child("password").setValue("null");
-                                newPost.child("lock").setValue("no");
-                            }
-
-                            newPost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            addClassroom.child("subject_id").setValue(id);
+                            addClassroom.child("subject_name").setValue(name);
+                            addClassroom.child("sec").setValue(sec);
+                            addClassroom.child("lock").setValue("yes");
+                            addClassroom.child("password").setValue(password);
+                            addClassroom.child("uid").setValue(uid);
+                            addClassroom.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    /*mProgress.dismiss();*/
-                                    Toast.makeText(ClassroomActivity.this, "เพิ่มกลุ่มเรียนใหม่แล้ว", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                    mProgress.dismiss();
+                                    Toast.makeText(ClassroomActivity.this, "เพิ่มห้องเรียนใหม่แล้ว", Toast.LENGTH_SHORT).show();
+                                    Intent intent = getIntent();
+                                    finish();
+                                    startActivity(intent);
                                 }
                             });
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+
 
                         }
-                    });
-                    dialog.dismiss();
-                    finish();
-                    startActivity(new Intent(ClassroomActivity.this, ClassroomActivity.class));
-                }
+
+                        if(!switchPassword.isChecked() && !id.isEmpty() && !name.isEmpty() && !sec.isEmpty()){
+                            mProgress.show();
+                            if(mImageUri != null) {
+                                StorageReference filepath = mStorage.child(mImageUri.getLastPathSegment());
+                                filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        String downloadUri = taskSnapshot.getDownloadUrl().toString();
+                                        addClassroom.child("image").setValue(downloadUri);
+                                    }
+                                });
+                            }
+
+                            if(mImageUri == null){
+                                addClassroom.child("image").setValue(linkClass);
+                            }
+
+                            addClassroom.child("subject_id").setValue(id);
+                            addClassroom.child("subject_name").setValue(name);
+                            addClassroom.child("sec").setValue(sec);
+                            addClassroom.child("lock").setValue("no");
+                            addClassroom.child("password").setValue("null");
+                            addClassroom.child("uid").setValue(uid);
+                            addClassroom.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    dialog.dismiss();
+                                    mProgress.dismiss();
+                                    Toast.makeText(ClassroomActivity.this, "เพิ่มห้องเรียนใหม่แล้ว", Toast.LENGTH_SHORT).show();
+                                    Intent intent = getIntent();
+                                    finish();
+                                    startActivity(intent);
+                                }
+                            });
+
+                        }
+
+                        /*-----------------------------------------------------------------------------------------------------*/
+
+
+
+                        /*---------- Part of "Some" Input ------------------------------------------------------------------------*/
+
+                        /*----- Switch ON -----*/
+
+                        if(switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this,"#1 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && !id.isEmpty() && name.isEmpty() && sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#2 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && !id.isEmpty() && !name.isEmpty() && sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#3 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && !id.isEmpty() && !name.isEmpty() && !sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#4 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#5 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && !sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#6 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && sec.isEmpty() && !password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#7 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && !sec.isEmpty() && !password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#8 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && !sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#9 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && sec.isEmpty() && !password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#10 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && !sec.isEmpty() && !password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#11 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && !id.isEmpty() && name.isEmpty() && sec.isEmpty() && !password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#12 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(switchPassword.isChecked() && !id.isEmpty() && name.isEmpty() && !sec.isEmpty() && password.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#13 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        /*----- Switch OFF -----*/
+
+                        if(!switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#14 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && !id.isEmpty() && name.isEmpty() && sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#15 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && !id.isEmpty() && !name.isEmpty() && sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#16 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && id.isEmpty() && name.isEmpty() && !sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#17 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#18 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && id.isEmpty() && !name.isEmpty() && !sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#19 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!switchPassword.isChecked() && !id.isEmpty() && name.isEmpty() && !sec.isEmpty()){
+                            Toast.makeText(ClassroomActivity.this, "#20 "  + "กรุณาใส่ข้อมูลให้ครบ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        /*-----------------------------------------------------------------------------------------------------*/
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
     }
 
-    private void startSearchClassroom() {
-
-    }
-
-    private void initView() {
-        tvAddClassroom = (TextView) findViewById(R.id.tvAddClassroom);
-        tvSearchClassroom = (TextView) findViewById(R.id.tvSearchClassroom);
-        viewClassroom = (RecyclerView) findViewById(R.id.viewClassroom);
-
-    }
-
-    private void initListener() {
-        tvAddClassroom.setOnClickListener(this);
-        tvSearchClassroom.setOnClickListener(this);
+    private void changProfilePicture() {
+        Intent gallerryIntent = new Intent();
+        gallerryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        gallerryIntent.setType("image/*");
+        startActivityForResult(gallerryIntent, GALLERY_REQUEST);
     }
 
     protected void onStart() {
@@ -255,16 +370,13 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
 
         {
             @Override
-            protected void populateViewHolder(final ClassroomViewHolder viewHolder, Classroom model, final int position) {
+            protected void populateViewHolder(final ClassroomViewHolder viewHolder, final Classroom model, final int position) {
 
-                //Control To add New "User" ClassRoom register
-                final DatabaseReference newClassroom = mDatabaseAddClass.push();
 
-                //Get Key UID From "ClassRoom" To String To Set New Push On User
                 final String Classroom_key = getRef(position).getKey();
                 final String key = mDatabase.child(Classroom_key).getKey();
+                final String user = mDatabaseUser.getKey();
 
-                // Get Value From mDatabase Child ClassRoom
                 final String lock = model.getLock();
                 final String password = model.getPassword();
                 final String image = model.getImage();
@@ -280,8 +392,7 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                 viewHolder.setUsername(model.getUsername());
                 viewHolder.setImage(getApplicationContext(), model.getImage());
                 viewHolder.setLock(model.getLock());
-
-                viewHolder.setUid(model.getUid());
+                viewHolder.setButtonReg(Classroom_key);
 
                         viewHolder.mView.findViewById(R.id.btnRegClassroom).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -314,17 +425,15 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                                                 mDatabaseUser.addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        newClassroom.child("uid").setValue(key);
-                                                        newClassroom.child("image").setValue(image);
-                                                        newClassroom.child("subject_id").setValue(sid);
-                                                        newClassroom.child("subject_name").setValue(name);
-                                                        newClassroom.child("username").setValue(username);
-                                                        newClassroom.child("sec").setValue(sec);
+                                                        mDatabaseRagClass.child(key).child(user).child("status").setValue("reg");
+                                                        mDatabaseUserGetClass.child(user).child(key).child("status").setValue("reg");
                                                     }
 
                                                     @Override
                                                     public void onCancelled(DatabaseError databaseError) {
-
+                                                        Intent intent = getIntent();
+                                                        finish();
+                                                        startActivity(intent);
                                                     }
                                                 });
 
@@ -366,23 +475,19 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     String key = mDatabase.child(Classroom_key).getKey();
 
-                                                    newClassroom.child("uid").setValue(key);
-                                                    newClassroom.child("image").setValue(image);
-                                                    newClassroom.child("subject_id").setValue(sid);
-                                                    newClassroom.child("subject_name").setValue(name);
-                                                    newClassroom.child("username").setValue(username);
-                                                    newClassroom.child("sec").setValue(sec);
+                                                    mDatabaseRagClass.child(key).child(user).child("status").setValue("reg");
+                                                    mDatabaseUserGetClass.child(user).child(key).child("status").setValue("reg");
                                                 }
 
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {
-
+                                                    Intent intent = getIntent();
+                                                    finish();
+                                                    startActivity(intent);
                                                 }
                                             });
-
                                             dialog.dismiss();
-                                            finish();
-                                            startActivity(new Intent(ClassroomActivity.this, ProfileActivity.class));
+
 
                                         }
                                     });
@@ -432,7 +537,9 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
                             }
                         });
 
@@ -479,14 +586,51 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    private void startRefresh() {
+        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                mSwipe.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipe.setRefreshing(false);
+                            /*Add Method*/
+                        startFirebase();
+                            /*---------*/
+                    }
+                },2000);
+            }
+        });
+    }
+
+    private void initView() {
+
+        mSwipe = (SwipeRefreshLayout) findViewById(R.id.layoutAuto);
+
+        tvAddClassroom = (ImageView) findViewById(R.id.tvAddClassroom);
+        btnBack = (ImageView) findViewById(R.id.btnBack);
+        viewClassroom = (RecyclerView) findViewById(R.id.viewClassroom);
+
+    }
+
+    private void initListener() {
+
+        tvAddClassroom.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+
+    }
+
     @Override
     public void onClick(View v) {
 
         if(v == tvAddClassroom){
             startDialogAddClassroom();
         }
-        if(v == tvSearchClassroom){
-            startSearchClassroom();
+
+        if(v == btnBack){
+            finish();
         }
 
     }

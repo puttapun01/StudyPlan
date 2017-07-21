@@ -15,6 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -53,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivity";
     private LinearLayout mGoogleBtn;
 
+    private CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         startFirebaes();
         startGoogleSignIn();
+        startFacebookSignIn();
 
         mProgress = new ProgressDialog(this);
 
@@ -146,6 +156,88 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void startFacebookSignIn() {
+        // Initialize Facebook Login button
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton mFacebookBtn = (LoginButton) findViewById(R.id.btnFacebookLogin);
+        mFacebookBtn.setReadPermissions("email", "public_profile");
+        mFacebookBtn.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+
+            }
+        });
+
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        //*Dialog Set message
+        //*Dialog show
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            final String image = "https://firebasestorage.googleapis.com/v0/b/studyplan-cb45d.appspot.com/o/Profile_images%2Fnobody_profile_image.jpg?alt=media&token=aa0b2ce6-9da2-45af-813e-87431cf2e2cb";
+                            final String stid = "(กรุณาเพิ่มข้อมูล)";
+                            final String name = "(กรุณาเพิ่มข้อมูล)";
+                            final String level = "(กรุณาเพิ่มข้อมูล)";
+                            final String faculty = "(กรุณาเพิ่มข้อมูล)";
+                            final String status = "(กรุณาเพิ่มข้อมูล)";
+                            final String status_id = "student";
+
+                            final String user_id = mAuth.getCurrentUser().getUid();
+
+                            if(user_id == null){
+
+                                databaseReference.child(user_id).child("name").setValue(name);
+                                databaseReference.child(user_id).child("stid").setValue(stid);
+                                databaseReference.child(user_id).child("level").setValue(level);
+                                databaseReference.child(user_id).child("faculty").setValue(faculty);
+                                databaseReference.child(user_id).child("status").setValue(status);
+                                databaseReference.child(user_id).child("image").setValue(image);
+                                databaseReference.child(user_id).child("status_id").setValue(status_id);
+
+                                Toast.makeText(LoginActivity.this, "เพิ่มข้อมูลใหม่", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        mProgress.dismiss();
+
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+
+                    }
+                });
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -155,22 +247,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-
             mProgress.setMessage("กำลังเข้าสู่ระบบ...");
             mProgress.show();
 
             if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
             } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
                 mProgress.dismiss();
             }
+
         }
     }
 
@@ -190,6 +282,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             final String level = "(กรุณาเพิ่มข้อมูล)";
                             final String faculty = "(กรุณาเพิ่มข้อมูล)";
                             final String status = "(กรุณาเพิ่มข้อมูล)";
+                            final String status_id = "student";
 
                             final String user_id = mAuth.getCurrentUser().getUid();
 
@@ -201,6 +294,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 databaseReference.child(user_id).child("faculty").setValue(faculty);
                                 databaseReference.child(user_id).child("status").setValue(status);
                                 databaseReference.child(user_id).child("image").setValue(image);
+                                databaseReference.child(user_id).child("status_id").setValue(status_id);
 
                                 Toast.makeText(LoginActivity.this, "เพิ่มข้อมูลใหม่", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -267,6 +361,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+
         if(v == textViewLogin){
             userLogin();
         }

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ececec">
+    android:background="#f4f4f4">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -88,64 +88,60 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9E9E9E"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_lock"/>
+        <Switch
+            android:id="@+id/switchPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ตั้งค่ารหัสผ่าน"
-            android:textColor="#0277BD"
-            android:textSize="18sp" />
+            android:layout_gravity="center"
+            android:text="เปิด / ปิด รหัสผ่าน  "
+            android:textColor="#ffffff"
+            android:textOff="no"
+            android:textOn="yes"
+            android:textSize="16sp" />
+    </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radioGroupSelectPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/radioButtonNotPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:duplicateParentState="false"
-                android:text="ไม่มีรหัสผ่าน"
-                android:textColor="#767676"
-                android:textSize="18sp"/>
-
-            <RadioButton
-                android:id="@+id/radioButtonHavePassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="มีรหัสผ่าน"
-                android:textColor="#767676"
-                android:textSize="18sp"/>
-
-        </RadioGroup>
+    <LinearLayout
+        android:id="@+id/layoutPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#9E9E9E">
 
         <EditText
-            android:id="@+id/editTextClassPassword"
-            android:layout_marginLeft="30dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_width="137dp"
+            android:id="@+id/tvPassword"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:gravity="center"
+            android:layout_width="100dp"
             android:layout_height="30dp"
-            android:background="@drawable/bg_input_all"
-            android:hint="รหัสผ่าน"
-            android:textColor="#000000"
+            android:hint="....."
             android:inputType="numberPassword"
-            android:textSize="16sp"
-            android:layout_weight="0.42" />
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:background="@drawable/bg_input_color_white"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
         android:background="#a6cb4a">
         <TextView
             android:id="@+id/btnSave"
