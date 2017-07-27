@@ -13,11 +13,8 @@ import android.widget.ImageView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import th.ac.rmutt.comsci.studyplan.Adapter.AllUser;
 import th.ac.rmutt.comsci.studyplan.Adapter.AllUserViewHolder;
@@ -84,114 +81,35 @@ public class AllUserActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void startList() {
+        final RecyclerView rvAllUser = (RecyclerView) findViewById(R.id.rvAllUser);
 
-        final RecyclerView rvTeacher = (RecyclerView) findViewById(R.id.rvTeacher);
-        final RecyclerView rvStudent = (RecyclerView) findViewById(R.id.rvStudent);
-
-                    /*---------------------- "Teacher" Zone ---------------------------*/
-
-        rvTeacher.setHasFixedSize(true);
-        rvTeacher.setLayoutManager(new LinearLayoutManager(AllUserActivity.this));
+        rvAllUser.setHasFixedSize(true);
+        rvAllUser.setLayoutManager(new LinearLayoutManager(AllUserActivity.this));
 
         LinearLayoutManager layoutTeacher = new LinearLayoutManager(AllUserActivity.this);
         layoutTeacher.setReverseLayout(true);
         layoutTeacher.setStackFromEnd(true);
 
-        rvTeacher.setLayoutManager(layoutTeacher);
+        rvAllUser.setLayoutManager(layoutTeacher);
 
         teacherAdapter = new FirebaseRecyclerAdapter<AllUser, AllUserViewHolder>(
                 AllUser.class,
                 R.layout.view_auth_user,
                 AllUserViewHolder.class,
-                mDatabaseTeacher
+                mDatabaseAll
         ) {
             @Override
             protected void populateViewHolder(final AllUserViewHolder viewHolder, final AllUser model, int position) {
-
-                final String teacher_key = getRef(position).getKey();
-
-                mDatabaseAll.child(teacher_key).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        final String status_id = dataSnapshot.child("status_id").getValue().toString();
-                        final String image = dataSnapshot.child("image").getValue().toString();
-                        final String name = dataSnapshot.child("name").getValue().toString();
-                        final String stid = dataSnapshot.child("stid").getValue().toString();
-                        final String status = dataSnapshot.child("status").getValue().toString();
-
-                        viewHolder.setImage(getApplicationContext(), image);
-                        viewHolder.setName(name);
-                        viewHolder.setStid(stid);
-                        viewHolder.setStatus(status);
-                        viewHolder.setStatus_id(status_id);
-
-                        viewHolder.setShow();
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        };
-                    /*---------------------- "Teacher" Zone ---------------------------*/
-
-
-                    /*---------------------- "Student" Zone ---------------------------*/
-
-        rvStudent.setHasFixedSize(true);
-        rvStudent.setLayoutManager(new LinearLayoutManager(AllUserActivity.this));
-
-        LinearLayoutManager layoutStudent = new LinearLayoutManager(AllUserActivity.this);
-        layoutStudent.setReverseLayout(true);
-        layoutStudent.setStackFromEnd(true);
-
-        rvStudent.setLayoutManager(layoutStudent);
-
-        studentAdapter = new FirebaseRecyclerAdapter<AllUser, AllUserViewHolder>(
-                AllUser.class,
-                R.layout.view_auth_user,
-                AllUserViewHolder.class,
-                mDatabaseStudent
-        ) {
-            @Override
-            protected void populateViewHolder(final AllUserViewHolder viewHolder, final AllUser model, int position) {
-
-                final String student_key = getRef(position).getKey();
-
-                mDatabaseAll.child(student_key).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        final String status_id = dataSnapshot.child("status_id").getValue().toString();
-                        final String image = dataSnapshot.child("image").getValue().toString();
-                        final String name = dataSnapshot.child("name").getValue().toString();
-                        final String stid = dataSnapshot.child("stid").getValue().toString();
-                        final String status = dataSnapshot.child("status").getValue().toString();
-                        viewHolder.setImage(getApplicationContext(), image);
-                        viewHolder.setName(name);
-                        viewHolder.setStid(stid);
-                        viewHolder.setStatus(status);
-                        viewHolder.setStatus_id(status_id);
-
-                        viewHolder.setShow();
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                viewHolder.setImage(getApplicationContext(), model.getImage());
+                viewHolder.setName(model.getName());
+                viewHolder.setStid(model.getStid());
+                viewHolder.setStatus(model.getStatus());
+                viewHolder.setStatus_id(model.getStatus_id());
             }
         };
 
-        rvTeacher.setAdapter(teacherAdapter);
-        rvStudent.setAdapter(studentAdapter);
+        rvAllUser.setAdapter(teacherAdapter);
 
-                    /*---------------------- "Student" Zone ---------------------------*/
 
     }
 

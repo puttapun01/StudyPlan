@@ -36,7 +36,7 @@
             android:weightSum="100">
 
             <TextView
-                android:id="@+id/header_recycler_view_editText"
+                android:id="@+id/btnSearch"
                 android:gravity="center_vertical"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"

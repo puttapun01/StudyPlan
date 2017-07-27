@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUserGetClass;
     private FirebaseUser mCurrentUser;
 
     private TextView textViewEditProfile;
@@ -71,6 +72,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private ProgressDialog mProgressDialog;
 
+    //count ZONE
+    private TextView textViewCountSubject;
+    private TextView textViewCountHomework;
+    private TextView textViewCountPlan;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +90,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         startDataChange();
         setButtonSegment();
         setViewSegment();
+        startCount();
+    }
+
+    private void startCount() {
+
     }
 
     private void setupDialog() {
@@ -96,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         String current_uid = mCurrentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        mDatabaseUserGetClass = FirebaseDatabase.getInstance().getReference().child("UserGetClass").child(current_uid);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         textViewUserEmail.setText("Email : " + user.getEmail());
@@ -113,15 +126,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             goMainScreen();
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        if (v == imageViewSelect){
-            startButtomSheetSelect();
-        }
-
     }
 
     private void startButtomSheetSelect() {
@@ -191,24 +195,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void initView() {
-        textViewName = (TextView) findViewById(R.id.textViewName);
-        textViewStudentId = (TextView) findViewById(R.id.textViewStudentId);
-        circularProfile = (CircularImageView) findViewById(R.id.circularProfile);
-        //Button
-        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
-
-        btnConfirmCancle = (TextView) findViewById(R.id.btnConfirmCancle);
-        btnConfirmLogout = (TextView) findViewById(R.id.btnConfirmLogout);
-
-        imageViewSelect = (ImageView) findViewById(R.id.imageViewSelect);
-}
-
-    private void initListener() {
-        imageViewSelect.setOnClickListener(this);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
     private void setViewSegment() {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -248,6 +236,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
+        mDatabaseUserGetClass.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count_subject = (int) dataSnapshot.getChildrenCount();
+                String num_subject = String.valueOf(count_subject);
+                textViewCountSubject.setText(num_subject);
+            }
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+
 
     }
 
@@ -313,6 +312,36 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private void initView() {
+        textViewName = (TextView) findViewById(R.id.textViewName);
+        textViewStudentId = (TextView) findViewById(R.id.textViewStudentId);
+        circularProfile = (CircularImageView) findViewById(R.id.circularProfile);
+        //Button
+        textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
+
+        btnConfirmCancle = (TextView) findViewById(R.id.btnConfirmCancle);
+        btnConfirmLogout = (TextView) findViewById(R.id.btnConfirmLogout);
+
+        imageViewSelect = (ImageView) findViewById(R.id.imageViewSelect);
+
+        textViewCountSubject = (TextView) findViewById(R.id.textViewCountSubject);
+        textViewCountHomework = (TextView) findViewById(R.id.textViewCountHomework);
+        textViewCountPlan = (TextView) findViewById(R.id.textViewCountPlan);
+    }
+
+    private void initListener() {
+        imageViewSelect.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == imageViewSelect){
+            startButtomSheetSelect();
+        }
+
     }
 
     @Override

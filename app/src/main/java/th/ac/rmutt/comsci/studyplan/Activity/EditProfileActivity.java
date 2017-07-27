@@ -543,9 +543,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
                             String downloadUri = taskSnapshot.getDownloadUrl().toString();
                             mDatabase.child("image").setValue(downloadUri);
+                            progressDialog.dismiss();
                         }
                     });
 

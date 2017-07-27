@@ -45,46 +45,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="#01579B"
-                    android:gravity="center"
-                    android:text="อาจารย์"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp" />
-
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvTeacher"
+                    android:id="@+id/rvAllUser"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="5dp">
                 </android.support.v7.widget.RecyclerView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="#4CAF50"
-                    android:gravity="center"
-                    android:text="นักศึกษา"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvStudent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                </android.support.v7.widget.RecyclerView>
-
-
-            </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

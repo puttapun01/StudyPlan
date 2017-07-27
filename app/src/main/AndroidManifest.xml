@@ -61,7 +61,16 @@
         <activity android:name=".Activity.ClassStatusActivity" />
         <activity android:name=".Activity.SettingClassroomActivity" />
         <activity android:name=".Activity.PostStatusClassActivity" />
-        <activity android:name=".Activity.AllUserActivity"></activity>
+        <activity android:name=".Activity.AllUserActivity" />
+        <activity android:name=".Activity.SearchClassActivity" />
+        <activity android:name=".Activity.ClassroomMemberActivity" />
+        <activity android:name=".Activity.ViewImageActivity" />
+        <activity android:name=".Activity.ViewFileActivity" />
+        <activity android:name=".Activity.ViewImagePostActivity" />
+        <activity android:name=".Activity.ViewFilePostActivity" />
+        <activity android:name=".Activity.EditPostActivity" />
+        <activity android:name=".Activity.CommentActivity" />
+        <activity android:name=".Activity.SendHomeworkActivity"></activity>
     </application>
 
 </manifest>

@@ -48,6 +48,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ClassroomActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SwipeRefreshLayout mSwipe;
+    private TextView btnSearch;
 
     private ImageView tvAddClassroom;
     private ImageView btnBack;
@@ -597,12 +598,19 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
                     public void run() {
                         mSwipe.setRefreshing(false);
                             /*Add Method*/
-                        startFirebase();
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
                             /*---------*/
                     }
                 },2000);
             }
         });
+    }
+
+    private void startSearchActivity() {
+        finish();
+        startActivity(new Intent(this, SearchClassActivity.class));
     }
 
     private void initView() {
@@ -611,6 +619,9 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
 
         tvAddClassroom = (ImageView) findViewById(R.id.tvAddClassroom);
         btnBack = (ImageView) findViewById(R.id.btnBack);
+
+        btnSearch = (TextView) findViewById(R.id.btnSearch);
+
         viewClassroom = (RecyclerView) findViewById(R.id.viewClassroom);
 
     }
@@ -619,6 +630,8 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
 
         tvAddClassroom.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+
+        btnSearch.setOnClickListener(this);
 
     }
 
@@ -633,7 +646,13 @@ public class ClassroomActivity extends AppCompatActivity implements View.OnClick
             finish();
         }
 
+        if(v == btnSearch){
+            startSearchActivity();
+        }
+
     }
+
+
 
     @Override
     protected void attachBaseContext (Context newBase) {

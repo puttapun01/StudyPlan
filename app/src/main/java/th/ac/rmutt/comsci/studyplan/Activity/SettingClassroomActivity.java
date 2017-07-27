@@ -78,7 +78,11 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
     private TextView tv_subject_name;
     private LinearLayout btnChangeSec;
     private LinearLayout btnChangeUsername;
+
     private LinearLayout mLayoutNewPassword;
+    private LinearLayout mLayoutOldPassword;
+
+
     private TextView tvPassword;
     //------------
 
@@ -96,7 +100,6 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
     private Uri mImageUri = null;
 
     private FirebaseRecyclerAdapter<AllUser, AllUserViewHolder> teacherAdapter;
-    private FirebaseRecyclerAdapter<AllUser, AllUserViewHolder> studentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +152,7 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String image = (String) dataSnapshot.child("image").getValue();
-                String password = (String) dataSnapshot.child("password").getValue();
+                final String password = (String) dataSnapshot.child("password").getValue();
                 final String lock = (String) dataSnapshot.child("lock").getValue();
                 String sec = (String) dataSnapshot.child("sec").getValue();
                 String subject_id = (String) dataSnapshot.child("subject_id").getValue();
@@ -172,32 +175,38 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                     layoutPassword.setVisibility(View.VISIBLE);
                 }
                 if(lock.equals("no")){
+                    switchPassword.setChecked(false);
                     layoutPassword.setVisibility(View.GONE);
                 }
 
                 switchPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        if(switchPassword.isChecked()){
-                            layoutPassword.setVisibility(View.VISIBLE);
-                            updateClass.setValue("yes");
+                        if(switchPassword.isChecked() && password.equals("null") && lock.equals("yes")) {
                             startChangePassword();
                         }
 
-                        if(!switchPassword.isChecked()) {
+                        if(switchPassword.isChecked() && password.equals("null") && lock.equals("no")) {
                             startChangePassword();
-                            layoutPassword.setVisibility(View.GONE);
+                        }
 
-                            if(lock.equals("yes")){
-                                switchPassword.setChecked(true);
-                            }
+                        if(switchPassword.isChecked() && !password.equals("null") && lock.equals("yes")) {
+                        }
 
-                            if(lock.equals("no")){
-                                switchPassword.setChecked(false);
-                            }
-//                            updateClass.setValue("no");
-//                            updatePassword.setValue("null");
+                        if(switchPassword.isChecked() && !password.equals("null") && lock.equals("no")) {
+                        }
 
+                        if(!switchPassword.isChecked() && password.equals("null") && lock.equals("yes")) {
+                        }
+
+                        if(!switchPassword.isChecked() && password.equals("null") && lock.equals("no")) {
+                        }
+
+                        if(!switchPassword.isChecked() && !password.equals("null") && lock.equals("yes")) {
+                            startChangePassword();
+                        }
+
+                        if(!switchPassword.isChecked() && !password.equals("null") && lock.equals("no")) {
                         }
 
                     }
@@ -310,46 +319,58 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
     private void startChangeId() {
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingClassroomActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialog_edit_subject_id, null);
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingClassroomActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_edit_subject_id, null);
 
-                final EditText mSubjectId = (EditText) mView.findViewById(R.id.editTextSubjectID);
-                TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+            final EditText mSubjectId = (EditText) mView.findViewById(R.id.editTextSubjectID);
+            TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+            TextView btnClose = (TextView) mView.findViewById(R.id.btnClose);
 
-                final DatabaseReference Getkey = mDatabase.child(mClass_key);
+            final DatabaseReference Getkey = mDatabase.child(mClass_key);
 
-                Getkey.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String sjid = dataSnapshot.child("subject_id").getValue().toString();
-                        mSubjectId.setHint(sjid);
+            Getkey.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String sjid = dataSnapshot.child("subject_id").getValue().toString();
+                    mSubjectId.setHint(sjid);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+
+            mBuilder.setView(mView);
+            final AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            //Setting Prevent Dialog
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!mSubjectId.getText().toString().isEmpty()){
+                        Toast.makeText(SettingClassroomActivity.this, "เปลี่ยนแปลงข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
+                        final String sjid = mSubjectId.getText().toString().trim();
+                        Getkey.child("subject_id").setValue(sjid);
+                        dialog.dismiss();
+                    }else{
+                        Toast.makeText(SettingClassroomActivity.this, "กรุณาใส่ข้อมูล",Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                    }
-                });
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                btnSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!mSubjectId.getText().toString().isEmpty()){
-                            Toast.makeText(SettingClassroomActivity.this, "เปลี่ยนแปลงข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
-                            final String sjid = mSubjectId.getText().toString().trim();
-                            Getkey.child("subject_id").setValue(sjid);
-                            dialog.dismiss();
-                        }else{
-                            Toast.makeText(SettingClassroomActivity.this, "กรุณาใส่ข้อมูล",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
 
     }
 
@@ -359,6 +380,7 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
                 final EditText mSubjectName = (EditText) mView.findViewById(R.id.editTextSubjectName);
                 TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+                TextView btnClose = (TextView) mView.findViewById(R.id.btnClose);
 
                 final DatabaseReference Getkey = mDatabase.child(mClass_key);
 
@@ -381,6 +403,10 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
+        //Setting Prevent Dialog
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -395,6 +421,13 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                     }
                 });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     private void startChangeSec() {
@@ -404,6 +437,7 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
                 final EditText mSubjectSec = (EditText) mView.findViewById(R.id.editTextSubjectSec);
                 TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+                TextView btnClose = (TextView) mView.findViewById(R.id.btnClose);
 
                 final DatabaseReference Getkey = mDatabase.child(mClass_key);
 
@@ -426,7 +460,12 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
-                btnSave.setOnClickListener(new View.OnClickListener() {
+
+        //Setting Prevent Dialog
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(!mSubjectSec.getText().toString().isEmpty()){
@@ -440,6 +479,13 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                     }
                 });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     private void startChangeUsername() {
@@ -451,20 +497,23 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 
+        //Setting Prevent Dialog
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
         final LinearLayout layoutManual = (LinearLayout) mView.findViewById(R.id.layoutManual);
         final LinearLayout layoutAuto = (LinearLayout) mView.findViewById(R.id.layoutAuto);
         final EditText mSubjectUsername = (EditText) mView.findViewById(R.id.editTextSubjectUsername);
         final RecyclerView rvTeacher = (RecyclerView) mView.findViewById(R.id.rvTeacher);
-        final RecyclerView rvStudent = (RecyclerView) mView.findViewById(R.id.rvStudent);
         TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
-
-
+        TextView btnClose = (TextView) mView.findViewById(R.id.btnClose);
 
         final DatabaseReference Getkey = mDatabase.child(mClass_key);
 
         layoutAuto.setVisibility(View.GONE);
 
         final SegmentedButtonGroup sbg = (SegmentedButtonGroup) mView.findViewById(R.id.sbUsername);
+
         sbg.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
@@ -483,8 +532,6 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                     layoutManual.setVisibility(View.GONE);
                     layoutAuto.setVisibility(View.VISIBLE);
 
-
-
                     /*---------------------- "Teacher" Zone ---------------------------*/
 
                     rvTeacher.setHasFixedSize(true);
@@ -498,30 +545,40 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
 
                     teacherAdapter = new FirebaseRecyclerAdapter<AllUser, AllUserViewHolder>(
                             AllUser.class,
-                            R.layout.view_auth_user,
+                            R.layout.view_auth_user_dialog,
                             AllUserViewHolder.class,
-                            mDatabaseTeacher
+                            mDatabaseRegClass.child(mClass_key)
                     ) {
                         @Override
                         protected void populateViewHolder(final AllUserViewHolder viewHolder, final AllUser model, int position) {
 
-                            final String teacher_key = getRef(position).getKey();
+                            final String reg_key = getRef(position).getKey();
 
-                            final String ping_key = mDatabaseRegClassUser.child(teacher_key).getKey();
-
-                            mDatabaseAll.child(ping_key).addValueEventListener(new ValueEventListener() {
+                            mDatabaseAll.child(reg_key).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                        final String status_id = dataSnapshot.child("status_id").getValue().toString();
-                                        final String image = dataSnapshot.child("image").getValue().toString();
-                                        final String name = dataSnapshot.child("name").getValue().toString();
-                                        final String stid = dataSnapshot.child("stid").getValue().toString();
-                                        final String status = dataSnapshot.child("status").getValue().toString();
+                                    final String status_id = dataSnapshot.child("status_id").getValue().toString();
+                                    final String image = dataSnapshot.child("image").getValue().toString();
+                                    final String name = dataSnapshot.child("name").getValue().toString();
+                                    final String stid = dataSnapshot.child("stid").getValue().toString();
+                                    final String status = dataSnapshot.child("status").getValue().toString();
+
+
                                         viewHolder.setImage(getApplicationContext(), image);
                                         viewHolder.setName(name);
                                         viewHolder.setStid(stid);
                                         viewHolder.setStatus(status);
                                         viewHolder.setStatus_id(status_id);
+
+
+                                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Getkey.child("username").setValue(name);
+                                            dialog.dismiss();
+                                            Toast.makeText(SettingClassroomActivity.this, "เปลี่ยนเชื่อผู้สอนแล้ว",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
 
                                 @Override
@@ -535,58 +592,6 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                     rvTeacher.setAdapter(teacherAdapter);
 
                     /*---------------------- "Teacher" Zone ---------------------------*/
-
-
-                    /*---------------------- "Student" Zone ---------------------------*/
-
-                    rvStudent.setHasFixedSize(true);
-                    rvStudent.setLayoutManager(new LinearLayoutManager(SettingClassroomActivity.this));
-
-                    LinearLayoutManager layoutStudent = new LinearLayoutManager(SettingClassroomActivity.this);
-                    layoutStudent.setReverseLayout(true);
-                    layoutStudent.setStackFromEnd(true);
-
-                    rvStudent.setLayoutManager(layoutStudent);
-
-                    studentAdapter = new FirebaseRecyclerAdapter<AllUser, AllUserViewHolder>(
-                            AllUser.class,
-                            R.layout.view_auth_user,
-                            AllUserViewHolder.class,
-                            mDatabaseStudent
-                    ) {
-                        @Override
-                        protected void populateViewHolder(final AllUserViewHolder viewHolder, final AllUser model, int position) {
-
-                            final String student_key = getRef(position).getKey();
-
-                            final String ping_key = mDatabaseRegClassUser.child(student_key).getKey();
-
-                            mDatabaseAll.child(ping_key).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                    final String status_id = dataSnapshot.child("status_id").getValue().toString();
-                                    final String image = dataSnapshot.child("image").getValue().toString();
-                                    final String name = dataSnapshot.child("name").getValue().toString();
-                                    final String stid = dataSnapshot.child("stid").getValue().toString();
-                                    final String status = dataSnapshot.child("status").getValue().toString();
-                                    viewHolder.setImage(getApplicationContext(), image);
-                                    viewHolder.setName(name);
-                                    viewHolder.setStid(stid);
-                                    viewHolder.setStatus(status);
-                                    viewHolder.setStatus_id(status_id);
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    };
-
-                    rvStudent.setAdapter(studentAdapter);
 
                     mProgress.dismiss();
 
@@ -610,6 +615,13 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                 }else{
                     Toast.makeText(SettingClassroomActivity.this, "กรุณาใส่ข้อมูล",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
 
@@ -641,28 +653,70 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                 final AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
+                //Setting Prevent Dialog
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+
                 final EditText mSubjectPassword_Old = (EditText) mView.findViewById(R.id.editTextSubjectPassword_Old);
                 final EditText mSubjectPassword_New = (EditText) mView.findViewById(R.id.editTextSubjectPassword_New);
-                final LinearLayout mLayoutOldPassword = (LinearLayout) mView.findViewById(R.id.layoutOldPassword);
+
+                mLayoutOldPassword = (LinearLayout) mView.findViewById(R.id.layoutOldPassword);
                 mLayoutNewPassword = (LinearLayout) mView.findViewById(R.id.layoutNewPassword);
 
                 final TextView btnSave = (TextView) mView.findViewById(R.id.btnSave);
+                final TextView btnClose = (TextView) mView.findViewById(R.id.btnClose);
 
                 final DatabaseReference Getkey = mDatabase.child(mClass_key);
                 final DatabaseReference updatePassword = mDatabase.child(mClass_key).child("password");
 
-                if(!switchPassword.isChecked()) {
-                    mLayoutNewPassword.setVisibility(View.GONE);
-                }
 
                 Getkey.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final String sjPassword = dataSnapshot.child("password").getValue().toString();
                         final String sjLock = dataSnapshot.child("lock").getValue().toString();
+                        final String lock = (String) dataSnapshot.child("lock").getValue();
 
-                        if(sjPassword.equals("null")){
+                        //Control Show / UnShow mLayout new/ old Password
+
+                        if(switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("yes")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
+                        }
+
+                        if(switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("no")) {
                             mLayoutOldPassword.setVisibility(View.GONE);
+                            mLayoutNewPassword.setVisibility(View.VISIBLE);
+                        }
+
+                        if(switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("yes")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.VISIBLE);
+                        }
+
+                        if(switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("no")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
+                        }
+
+                        if(!switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("yes")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
+                        }
+
+                        if(!switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("no")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
+                        }
+
+                        if(!switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("yes")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
+                        }
+
+                        if(!switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("no")) {
+                            mLayoutOldPassword.setVisibility(View.VISIBLE);
+                            mLayoutNewPassword.setVisibility(View.GONE);
                         }
 
                         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -671,66 +725,105 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                                 final String pOld = mSubjectPassword_Old.getText().toString();
                                 final String pNew = mSubjectPassword_New.getText().toString();
 
-                                if(sjPassword.equals("null")&& !pNew.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "สร้างรหัสผ่านใหม่แล้ว",Toast.LENGTH_SHORT).show();
-                                    updatePassword.setValue(pNew);
-                                    dialog.dismiss();
+                                if(switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("yes")) {
+                                    if(pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกข้อมูล", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรอกข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
-                                if(!sjPassword.equals("null") && sjPassword.equals(pOld) && !pNew.isEmpty() && !pNew.equals(sjPassword)){
-                                    Toast.makeText(SettingClassroomActivity.this,"#1" + "เปลี่ยนรหัสผ่านแล้ว",Toast.LENGTH_SHORT).show();
-                                    updatePassword.setValue(pNew);
-                                    dialog.dismiss();
+                                if(switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("no")) {
+                                    if(pNew.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกข้อมูล", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pNew.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรอกข้อมูลแล้ว", Toast.LENGTH_SHORT).show();
+                                        updateClass.setValue("yes");
+                                        updatePassword.setValue(pNew);
+                                        switchPassword.setChecked(true);
+                                        dialog.dismiss();
+
+                                    }
                                 }
 
-                                if(!sjPassword.equals("null")&& sjLock.equals("no") && !pOld.isEmpty() && sjPassword.equals(pOld)){
-                                    Toast.makeText(SettingClassroomActivity.this,"#2" + "เปลี่ยนรหัสผ่านแล้ว",Toast.LENGTH_SHORT).show();
-                                    updateClass.setValue("no");
-                                    updatePassword.setValue("null");
-                                    dialog.dismiss();
+                                if(switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("yes")) {
+                                    if(pNew.isEmpty() && pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกข้อมูล", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pNew.isEmpty() && pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกหรัสเก่า", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(pNew.isEmpty() && !pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกรหัสใหม่", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pNew.isEmpty() && !pOld.isEmpty() && !pOld.equals(sjPassword)){
+                                        Toast.makeText(SettingClassroomActivity.this, "รหัสเก่าไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    if(!pNew.isEmpty() && !pOld.isEmpty() && pOld.equals(sjPassword) && pOld.equals(pNew)){
+                                        Toast.makeText(SettingClassroomActivity.this, "รหัสใหม่ เหมือน รหัสเก่า", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pNew.isEmpty() && !pOld.isEmpty() && pOld.equals(sjPassword) && !pOld.equals(pNew)){
+                                        Toast.makeText(SettingClassroomActivity.this, "เปลี่ยนรหัสแล้ว", Toast.LENGTH_SHORT).show();
+                                        updateClass.setValue("yes");
+                                        updatePassword.setValue(pNew);
+                                        switchPassword.setChecked(true);
+                                        dialog.dismiss();
+
+                                    }
                                 }
 
-                                if(!sjPassword.equals("null") && sjPassword.equals(pOld) && pNew.isEmpty() && sjLock.equals("yes")){
-                                    Toast.makeText(SettingClassroomActivity.this, "###",Toast.LENGTH_SHORT).show();
-                                    updateClass.setValue("no");
-                                    updatePassword.setValue("null");
-                                    dialog.dismiss();
-                                    Intent intent = getIntent();
-                                    finish();
-                                    startActivity(intent);
+                                if(switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("no")) {
+
                                 }
 
-                                if(!sjPassword.equals("null")&& !pOld.isEmpty() && !sjPassword.equals(pOld)){
-                                    Toast.makeText(SettingClassroomActivity.this, "รหัสผ่านเดิมไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                                if(!switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("yes")) {
+
                                 }
 
-                                if(sjPassword.equals("null")&& pNew.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "#1 กรุณากรอกรหัสผ่านใหม่",Toast.LENGTH_SHORT).show();
+                                if(!switchPassword.isChecked() && sjPassword.equals("null") && lock.equals("no")) {
+
                                 }
 
-                                if(!sjPassword.equals("null") && pOld.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกรหัสผ่านเดิม",Toast.LENGTH_SHORT).show();
+                                if(!switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("yes")) {
+                                    if(pOld.isEmpty()){
+                                        Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกข้อมูล", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pOld.isEmpty()&& !pOld.equals(sjPassword)){
+                                        Toast.makeText(SettingClassroomActivity.this, "รหัสเดิมไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if(!pOld.isEmpty()&& pOld.equals(sjPassword)){
+                                        Toast.makeText(SettingClassroomActivity.this, "เปลี่ยนรหัสแล้ว", Toast.LENGTH_SHORT).show();
+                                        updateClass.setValue("no");
+                                        updatePassword.setValue("null");
+                                        switchPassword.setChecked(false);
+                                        dialog.dismiss();
+
+                                    }
                                 }
 
-                                if(!sjPassword.equals("null") && pNew.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "#2 กรุณากรอกรหัสผ่านใหม่",Toast.LENGTH_SHORT).show();
+                                if(!switchPassword.isChecked() && !sjPassword.equals("null") && lock.equals("no")) {
+
                                 }
 
-                                if(!sjPassword.equals("null") && pOld.isEmpty() && pNew.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "กรุณากรอกข้อมูล",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                                if(!sjPassword.equals("null")){
+                                    switchPassword.setChecked(true);
                                 }
 
-                                if(!sjPassword.equals("null") && !sjPassword.equals(pOld)){
-                                    Toast.makeText(SettingClassroomActivity.this, "รหัสผ่านเดิมไม่ถูกต้อง",Toast.LENGTH_SHORT).show();
+                                if(sjPassword.equals("null")){
+                                    switchPassword.setChecked(false);
                                 }
 
-                                if(!sjPassword.equals("null") && sjPassword.equals(pOld) && pNew.isEmpty()){
-                                    Toast.makeText(SettingClassroomActivity.this, "#3 กรุณากรอกรหัสผ่านใหม่",Toast.LENGTH_SHORT).show();
-                                }
-
-                                if(!sjPassword.equals("null") && sjPassword.equals(pOld) && !pNew.isEmpty() && pNew.equals(sjPassword)){
-                                    Toast.makeText(SettingClassroomActivity.this, "รหัสผ่านใหม่ ซ้ำ กับรหัสผ่านเดิม",Toast.LENGTH_SHORT).show();
-                                }
                             }
                         });
 
@@ -743,6 +836,8 @@ public class SettingClassroomActivity extends AppCompatActivity implements View.
                         startActivity(intent);
                     }
                 });
+
+
 
     }
 

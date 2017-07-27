@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#efefef"
-    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PostStatusClassActivity"
-    >
+    tools:context="th.ac.rmutt.comsci.studyplan.Activity.PostStatusClassActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -173,11 +172,13 @@
             android:layout_height="0dp"
             android:layout_weight="90"
             android:background="#ffffff"
-            android:ems="10"
             android:gravity="top"
             android:hint="คุณกำลังจะสื่อสารอะไร?"
             android:inputType="textMultiLine"
+            android:ems="7000"
+            android:maxLines="500"
             android:padding="15dp"
+            android:scrollbars="vertical"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -263,7 +264,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="70"
+                android:layout_weight="62"
                 android:gravity="center_vertical"
                 android:text="รูปภาพ"
                 android:textColor="#000000"
@@ -273,11 +274,20 @@
                 android:id="@+id/tvViewImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="28"
                 android:gravity="center"
                 android:text="ดูรูปภาพ"
-                android:textColor="#ff0000"
-                android:textSize="18sp" />
+                android:textColor="#01579B"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imClearImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="10"
+                android:src="@drawable/ic_close_circle"
+                android:tint="#ff0000" />
 
         </LinearLayout>
 
@@ -305,7 +315,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="70"
+                android:layout_weight="62"
                 android:gravity="center_vertical"
                 android:text="ไฟล์งาน"
                 android:textColor="#000000"
@@ -315,11 +325,20 @@
                 android:id="@+id/tvViewFile"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="28"
                 android:gravity="center"
                 android:text="ดูไฟล์งาน"
-                android:textColor="#ff0000"
-                android:textSize="18sp" />
+                android:textColor="#01579B"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imClearFile"
+                android:layout_gravity="center"
+                android:layout_weight="10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_circle"
+                android:tint="#ff0000"/>
 
         </LinearLayout>
     </LinearLayout>

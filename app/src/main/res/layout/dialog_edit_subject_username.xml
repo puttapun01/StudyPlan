@@ -88,18 +88,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:background="#a6cb4a">
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/btnClose"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:background="#F44336"
+                android:text="ปิด"/>
+
             <TextView
                 android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="บันทึก"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:background="#a6cb4a"/>
+                android:background="#4CAF50"
+                android:text="บันทึก"/>
 
         </LinearLayout>
 
@@ -112,64 +125,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="#01579B"
-                    android:gravity="center"
-                    android:text="อาจารย์"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvTeacher"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </android.support.v7.widget.RecyclerView>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="#4CAF50"
-                    android:gravity="center"
-                    android:text="นักศึกษา"
-                    android:textColor="#ffffff"
-                    android:textSize="18dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvStudent"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </android.support.v7.widget.RecyclerView>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import th.ac.rmutt.comsci.studyplan.Activity.ClassStatusActivity;
-import th.ac.rmutt.comsci.studyplan.Activity.ClassroomActivity;
+import th.ac.rmutt.comsci.studyplan.Activity.SearchClassActivity;
 import th.ac.rmutt.comsci.studyplan.Adapter.Classroom;
 import th.ac.rmutt.comsci.studyplan.Adapter.ClassroomViewHolder;
 import th.ac.rmutt.comsci.studyplan.R;
@@ -60,7 +60,7 @@ public class ClassroomFragment extends Fragment {
         textViewAddClassRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplication(), ClassroomActivity.class);
+                Intent intent = new Intent(getActivity().getApplication(), SearchClassActivity.class);
                 startActivity(intent);
             }
         });
